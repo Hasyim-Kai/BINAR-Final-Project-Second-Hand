@@ -5,6 +5,7 @@ import HomepageProductList from "../components/HomepageProductList";
 
 export default function HomePage() {
   return <div className="min-h-screen">
+    {/* tutorial issuee */}
     {/* BANNER */}
     <HomePageBanner />
 
