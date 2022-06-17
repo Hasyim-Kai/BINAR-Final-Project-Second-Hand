@@ -28,7 +28,7 @@ export default function LoginPage() {
       </div>
 
       <section className="flex flex-col items-center justify-center mx-auto">
-        <form className="lg:w-96 w-72">
+        <form  onSubmit={login} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">
             <b>Masuk</b>
           </h1>
@@ -63,7 +63,7 @@ export default function LoginPage() {
           </div>
 
           <button
-            onClick={login}
+           
             className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}
           >
             Masuk
