@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {HandleUploadImages} from "../utility/HandleUploadImages";
 
 export default function ProfilePage() {
   const [selectedFile, setSelectedFile] = useState();
@@ -17,15 +18,16 @@ export default function ProfilePage() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  function handleUploadImages(event) {
-    if (event.target.files[0].size > 1000000) {
-      event.preventDefault();
-      alert(`Cannot upload files more than 1 MB`);
-      return;
-    } else {
-      setSelectedFile(event.target.files[0]);
-    }
-  }
+  // HandleUploadImages
+  // function handleUploadImages(event) {
+  //   if (event.target.files[0].size > 1000000) {
+  //     event.preventDefault();
+  //     alert(`Cannot upload files more than 1 MB`);
+  //     return;
+  //   } else {
+  //     setSelectedFile(event.target.files[0]);
+  //   }
+  // }
 
   return (
     <div className="min-h-screen max-w-4xl mx-auto relative flex flex-col items-center gap-4 pt-10">
@@ -39,7 +41,7 @@ export default function ProfilePage() {
           />
         </div>
         <input
-          onChange={handleUploadImages}
+          onChange={(e)=> HandleUploadImages(e, setSelectedFile)}
           className="hidden"
           type="file"
           name="profilePhoto"
