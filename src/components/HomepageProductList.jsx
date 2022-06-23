@@ -4,8 +4,16 @@ import EmptyProductNotification from "../components/EmptyProductNotification";
 import SearchButton from "../components/SearchButton";
 import SecondarySearchButton from "../components/SecondarySearchButton";
 import ProductItem from "../components/ProductItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getContent } from "../redux/action/contentAction";
 
 export default function HomepageProductList() {
+   // const {content} = useSelector(state=>state.contentReducer)
+   // console.log('isi content', content)
+   const dispatch = useDispatch()
+   // useEffect(()=>{
+   //    dispatch(getContent())
+   // },[])
    // DATA DUMMY NANTI DIGANTI DATA REAL DARI REDUX useSelector
    let dataDummy = [
       { name: "Jam Tangan", category: "Aksesoris", price: 250000 },
@@ -23,6 +31,7 @@ export default function HomepageProductList() {
    const filterBtn = ['Semua', 'Hobi', 'Kendaraan', 'Baju', 'Elektronik', 'Kesehatan']
    const [category, setCategory] = useState('Semua');
    const [filteredDataDummy, setFilteredDataDummy] = useState([dataDummy]);
+   // const [filteredDataDummy, setFilteredDataDummy] = useState([content]);
 
    function onCategoryChange(categoryName) { setCategory(categoryName); }
 

@@ -10,6 +10,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 dataLogin: action.payload,
             };
+
         case "SET_DATA_REGISTER":
             return {
                 ...state,

@@ -1,7 +1,11 @@
 import { useDispatch } from 'react-redux'
 import useForm from '../utility/UseForm'
-import { Login } from '../redux/action/authAction'
+import {LoginAction } from '../redux/action/authAction'
 import { Link } from 'react-router-dom'
+import Loading from '../components/Loading'
+import users from '../constants/api/users'
+import axios from 'axios'
+import React, {useState} from 'react'
 
 export default function LoginPage() {
   const dispatch = useDispatch()
@@ -12,8 +16,11 @@ export default function LoginPage() {
 
   const login = (e) => {
     e.preventDefault()
-    dispatch(Login(form))
+    dispatch(LoginAction(form))
     console.log('isi form', form)
+    // users.login(form).then(res => {
+    //   console.log('lempar data', res)
+    // })
   }
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`
 
@@ -28,7 +35,7 @@ export default function LoginPage() {
       </div>
 
       <section className="flex flex-col items-center justify-center mx-auto">
-        <form  onSubmit={login} className="lg:w-96 w-72">
+        <form onSubmit={login} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">
             <b>Masuk</b>
           </h1>
@@ -46,7 +53,7 @@ export default function LoginPage() {
               required
             />
           </div>
-
+          
           <div className="mb-5">
             <label>Password</label>
             <br />
@@ -63,7 +70,6 @@ export default function LoginPage() {
           </div>
 
           <button
-           
             className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}
           >
             Masuk
