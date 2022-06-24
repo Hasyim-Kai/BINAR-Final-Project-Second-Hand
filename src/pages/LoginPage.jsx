@@ -1,29 +1,35 @@
-import { useDispatch } from 'react-redux'
-import useForm from '../utility/UseForm'
-import {LoginAction } from '../redux/action/authAction'
-import { Link } from 'react-router-dom'
-import Loading from '../components/Loading'
-import users from '../constants/api/users'
-import axios from 'axios'
-import React, {useState} from 'react'
+import { useDispatch } from "react-redux";
+import useForm from "../utility/UseForm";
+import { LoginAction } from "../redux/action/authAction";
+import { Link } from "react-router-dom";
+import Loading from "../components/Loading";
+import users from "../services/api/users";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import FailAlert from "../components/FailAlert";
 
 export default function LoginPage() {
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("user:token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
+
+  const dispatch = useDispatch();
   const [form, setForm] = useForm({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
+  const [alert, setAlert] = useState(false);
 
   const login = (e) => {
-    e.preventDefault()
-    dispatch(LoginAction(form))
-    console.log('isi form', form)
-    // users.login(form).then(res => {
-    //   console.log('lempar data', res)
-    // })
-  }
-  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`
-
+    e.preventDefault();
+    dispatch(LoginAction(form, navigate, () => setAlert(true)));
+  };
+  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   return (
     <div className="grid lg:grid-cols-2 h-screen">
       <div className="hidden lg:inline-block h-screen">
@@ -33,7 +39,7 @@ export default function LoginPage() {
           alt="banner"
         />
       </div>
-
+      {alert && <FailAlert showAlert={true} message={"Login is failed"} />}
       <section className="flex flex-col items-center justify-center mx-auto">
         <form onSubmit={login} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">
@@ -49,22 +55,22 @@ export default function LoginPage() {
               name="email"
               placeholder="Contoh: johndee@gmail.com"
               value={form.email}
-              onChange={(e) => setForm('email', e.target.value)}
+              onChange={(e) => setForm("email", e.target.value)}
               required
             />
           </div>
-          
+
           <div className="mb-5">
             <label>Password</label>
             <br />
             <input
               className={inputStyle}
               value={form.password}
-              onChange={(e) => setForm('password', e.target.value)}
+              onChange={(e) => setForm("password", e.target.value)}
               type="password"
               name="password"
               placeholder="6+ karakter"
-              pattern="{6,}"
+              // pattern="{6,}"
               required
             />
           </div>
@@ -84,5 +90,5 @@ export default function LoginPage() {
         </form>
       </section>
     </div>
-  )
+  );
 }

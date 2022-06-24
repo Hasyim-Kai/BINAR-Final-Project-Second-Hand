@@ -1,11 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
 import NotificationDropdown from "../components/NotificationDropdown";
+import { useNavigate } from "react-router-dom";
 
 export default function UserNavbar() {
   // get the active Route path
+  const navigate = useNavigate();
   let isLoginPage = useLocation().pathname === "/login" ? true : false;
   let isRegisterPage = useLocation().pathname === "/register" ? true : false;
+  const token = localStorage.getItem("user:token");
 
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return isLoginPage || isRegisterPage ? (
     <></>
   ) : (
@@ -42,11 +49,12 @@ export default function UserNavbar() {
               <img src="/icons/fi_user.svg" alt="user" />
             </button>
           </Link>
-          <Link to="login">
-            <button className="">
+
+          {token && (
+            <button className="" onClick={logout}>
               <img src="/icons/iconlogout.svg" alt="logout" />
             </button>
-          </Link>
+          )}
         </div>
       </div>
     </nav>

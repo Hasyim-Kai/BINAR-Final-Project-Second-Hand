@@ -4,7 +4,7 @@ import { contentReducer } from "./contentReducer";
 
 
 const rootReducer = combineReducers({
-    // auth: authReducer
+    authReducer,
     contentReducer
 })
 
