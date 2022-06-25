@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import useForm from "../utility/UseForm";
 import { useDispatch } from "react-redux";
 import { Register } from "../redux/action/authAction";
+import SuccessAlert from "../components/SuccessAlert";
+import { useState } from "react";
+import FailAlert from "../components/FailAlert";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -11,9 +14,11 @@ export default function RegisterPage() {
     password: "",
   });
 
+
+  const [alert, setAlert] = useState(false);
   const Registerclick = (e) => {
     e.preventDefault();
-    dispatch(Register(form));
+    dispatch(Register(form ,() => setAlert(true)));
     console.log("isi form", form);
   };
 
@@ -28,7 +33,7 @@ export default function RegisterPage() {
           alt="Banner"
         />
       </div>
-
+      {alert && <SuccessAlert showAlert={true} message={"Register Success"} />}
       <section className="flex flex-col items-center justify-center mx-auto">
         <form onSubmit={Registerclick} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">
