@@ -1,29 +1,25 @@
 import { Link } from "react-router-dom";
 import useForm from "../utility/UseForm";
 import { useDispatch } from "react-redux";
-import { Register } from "../redux/action/authAction";
+import { RegisterAction } from "../redux/action/authAction";
 import SuccessAlert from "../components/SuccessAlert";
 import { useState } from "react";
-import FailAlert from "../components/FailAlert";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
+  const [alert, setAlert] = useState(false);
   const [form, setForm] = useForm({
-    name: "",
     email: "",
     password: "",
+    name: ""
   });
 
-
-  const [alert, setAlert] = useState(false);
   const Registerclick = (e) => {
     e.preventDefault();
-    dispatch(Register(form ,() => setAlert(true)));
-    console.log("isi form", form);
+    dispatch(RegisterAction(form ,() => setAlert(true)));
   };
 
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
-
   return (
     <div className="grid lg:grid-cols-2 h-screen">
       <div className="hidden lg:inline-block h-screen">
