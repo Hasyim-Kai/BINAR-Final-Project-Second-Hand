@@ -1,14 +1,35 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {HandleUploadImages} from "../utility/HandleUploadImages";
+import FailAlert from "../components/FailAlert";
+import { GetProfile } from "../redux/action/authAction";
+import { countryAction } from "../redux/action/countryAction";
+import { HandleUploadImages } from "../utility/HandleUploadImages";
+import useForm from "../utility/UseForm";
 
 export default function ProfilePage() {
-  const [selectedFile, setSelectedFile] = useState();
-  const [preview, setPreview] = useState("/images/default_profile_photo.png");
+  const dispatch = useDispatch();
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
+  const [preview, setPreview] = useState("/images/default_profile_photo.png");
+  const [selectedFile, setSelectedFile] = useState();
+  const [alert, setAlert] = useState(false);
+  const [nameCity, setNameCity] = useState("");
+  const { country } = useSelector((state) => state.countryReducer);
+  const { dataGetProfile } = useSelector((state) => state.authReducer);
+  console.log("isi data user", dataGetProfile);
+
+  const [form, setForm] = useForm({
+    name: "",
+    phone_number: "",
+    address: "",
+    profile_pict: "",
+    city_id: "",
+  });
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
+    dispatch(GetProfile());
+    dispatch(countryAction());
     if (!selectedFile) {
       return;
     }
@@ -18,19 +39,25 @@ export default function ProfilePage() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
-  // HandleUploadImages
-  // function handleUploadImages(event) {
-  //   if (event.target.files[0].size > 1000000) {
-  //     event.preventDefault();
-  //     alert(`Cannot upload files more than 1 MB`);
-  //     return;
-  //   } else {
-  //     setSelectedFile(event.target.files[0]);
-  //   }
-  // }
+  const getIdCity = (e) => {
+    setNameCity(e.target.value);
+    console.log("isi nama get IDcity:", nameCity);
+  };
 
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
   return (
     <div className="min-h-screen max-w-4xl mx-auto relative flex flex-col items-center gap-4 pt-10">
+      {/* show alert */}
+      {alert && (
+        <FailAlert
+          showAlert={true}
+          message={"Cannot upload files more than 1 MB"}
+        />
+      )}
+
       <h1 className="mb-5 text-xl">Lengkapi Info Akun</h1>
       <label htmlFor="profilePhoto" className="cursor-pointer">
         <div className="overflow-hidden w-28 h-28 rounded-xl hover:scale-110 transition-all duration-300">
@@ -40,8 +67,12 @@ export default function ProfilePage() {
             alt="cat"
           />
         </div>
+
+        {/* UPLOAD IMAGE PROFILE */}
         <input
-          onChange={(e)=> HandleUploadImages(e, setSelectedFile)}
+          onChange={(e) =>
+            HandleUploadImages(e, setSelectedFile, () => setAlert(true))
+          }
           className="hidden"
           type="file"
           name="profilePhoto"
@@ -49,8 +80,8 @@ export default function ProfilePage() {
           id="profilePhoto"
         />
       </label>
-
-      <form className="w-3/5 mt-10 mb-24">
+      {/* START FORM DATA PROFILE */}
+      <form className="w-3/5 mt-10 mb-24" onSubmit={submit}>
         <div className="mb-5">
           <label>Nama</label>
           <br />
@@ -59,7 +90,8 @@ export default function ProfilePage() {
             type="text"
             name="name"
             placeholder="Nama Lengkap"
-            required
+            value={form.name}
+            onChange={(e) => setForm("name", e.target.value)}
           />
         </div>
 
@@ -69,10 +101,22 @@ export default function ProfilePage() {
           <input
             className={inputStyle}
             type="text"
-            name="kota"
             placeholder="Kota Anda"
-            required
+            list="country"
+            name="country"
+            value={nameCity}
+            onChange={(e) => getIdCity(e)}
           />
+
+          {console.log("isi nama city", nameCity)}
+
+          <datalist id="country">
+            {country.map((item, key) => (
+              <>
+                <option key={key} value={item.nama_kota} />
+              </>
+            ))}
+          </datalist>
         </div>
 
         <div className="mb-5">
@@ -81,9 +125,10 @@ export default function ProfilePage() {
           <input
             className={inputStyle}
             type="text"
-            name="alamat"
+            name="address"
             placeholder="Alamat Anda"
-            required
+            value={form.address}
+            onChange={(e) => setForm("address", e.target.value)}
           />
         </div>
 
@@ -93,10 +138,11 @@ export default function ProfilePage() {
           <input
             className={inputStyle}
             type="number"
-            name="nohp"
+            name="phone_number"
             placeholder="Contoh: 08968888123"
             pattern="{6,}"
-            required
+            value={form.phone_number}
+            onChange={(e) => setForm("phone_number", e.target.value)}
           />
         </div>
 
@@ -106,7 +152,7 @@ export default function ProfilePage() {
           Simpan
         </button>
       </form>
-
+      {/* END FORM DATA PROFILE */}
       <Link className="absolute left-28" to="/">
         <img src="/icons/fi_arrow-left.svg" alt="arrow left" />
       </Link>

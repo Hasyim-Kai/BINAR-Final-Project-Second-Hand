@@ -1,11 +1,11 @@
-import users from "../../services/api/users";
+import usersAPI from "../../services/api/usersAPI";
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
   if (data.password.length < 6) {
     callback();
     return;
   }
-  users
+  usersAPI
     .login(data)
     .then((res) => {
       localStorage.setItem("user:token", res.data.data);
@@ -27,4 +27,19 @@ export const Register = (data) => {
       payload: data,
     });
   };
+};
+
+export const GetProfile = () => (dispatch) => {
+  usersAPI
+    .getProfile()
+    .then(
+      (res) => (
+        console.log("isi get profile ", res?.data?.data),
+        dispatch({
+          type: "SET_DATA_GET_PROFILE",
+          payload: res?.data?.data,
+        })
+      )
+    )
+    .catch((err) => console.log(err));
 };

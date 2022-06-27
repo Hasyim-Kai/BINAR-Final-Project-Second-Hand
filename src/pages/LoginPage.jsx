@@ -1,16 +1,26 @@
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import useForm from "../utility/UseForm";
-import { LoginAction } from "../redux/action/authAction";
-import { Link } from "react-router-dom";
-import Loading from "../components/Loading";
-import users from "../services/api/users";
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FailAlert from "../components/FailAlert";
+import { LoginAction } from "../redux/action/authAction";
+import useForm from "../utility/UseForm";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [alert, setAlert] = useState(false);
+  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
+
+  const [form, setForm] = useForm({
+    email: "",
+    password: "",
+  });
+
+  const login = (e) => {
+    e.preventDefault();
+    dispatch(LoginAction(form, navigate, () => setAlert(true)));
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("user:token");
     if (token) {
@@ -18,18 +28,6 @@ export default function LoginPage() {
     }
   }, []);
 
-  const dispatch = useDispatch();
-  const [form, setForm] = useForm({
-    email: "",
-    password: "",
-  });
-  const [alert, setAlert] = useState(false);
-
-  const login = (e) => {
-    e.preventDefault();
-    dispatch(LoginAction(form, navigate, () => setAlert(true)));
-  };
-  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   return (
     <div className="grid lg:grid-cols-2 h-screen">
       <div className="hidden lg:inline-block h-screen">
@@ -70,7 +68,6 @@ export default function LoginPage() {
               type="password"
               name="password"
               placeholder="6+ karakter"
-              // pattern="{6,}"
               required
             />
           </div>

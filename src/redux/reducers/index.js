@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import authReducer from './authReducer';
+import authReducer from "./authReducer";
 import { contentReducer } from "./contentReducer";
-
+import countryReducer from "./countryReducer";
 
 const rootReducer = combineReducers({
-    authReducer,
-    contentReducer
-})
+  authReducer,
+  contentReducer,
+  countryReducer,
+});
 
-export default rootReducer
+export default rootReducer;
