@@ -44,7 +44,7 @@ export default function UserNavbar() {
             </button>
           </Link>
           <NotificationDropdown />
-          <Link to="profile">
+          <Link to={token ? "profile " : "login"}>
             <button className="">
               <img src="/icons/fi_user.svg" alt="user" />
             </button>
