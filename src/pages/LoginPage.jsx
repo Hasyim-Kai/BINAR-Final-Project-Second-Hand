@@ -5,10 +5,11 @@ import FailAlert from "../components/FailAlert";
 import { LoginAction } from "../redux/action/authAction";
 import useForm from "../utility/UseForm";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
+
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
 
   const [form, setForm] = useForm({
@@ -88,4 +89,6 @@ export default function LoginPage() {
       </section>
     </div>
   );
-}
+};
+
+export default LoginPage;

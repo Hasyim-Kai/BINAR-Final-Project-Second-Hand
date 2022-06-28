@@ -2,7 +2,7 @@ import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length < 6) {
+  if (data.password.length > 6) {
     callback();
     return;
   }
@@ -22,17 +22,17 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
     });
 };
 
-export const RegisterAction = (data, callback) => (dispatch) => {
-  if (data.password.length < 6) {
+export const RegisterAction = (data, navigate, callback) => (dispatch) => {
+  if (data.password.length > 6) {
     usersAPI
       .register(data)
       .then((res) => {
         callback();
-        console.log(res);
         dispatch({
           type: "SET_DATA_REGISTER",
           payload: data,
         });
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);
