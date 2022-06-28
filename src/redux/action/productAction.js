@@ -19,11 +19,12 @@ export const PostProduct = () => (dispatch) => {
     .PostProduct()
     .then((res) => {
       dispatch({
-        type: "SET_PRODUCT_LIST",
+        type: "SET_ADD_PRODUCT",
         payload: res.data.data,
       });
     })
     .catch((err) => {
       console.log(err);
+      alert("ADD_PRODUCT_FAIL")
     });
 };
