@@ -1,21 +1,32 @@
-import { useDispatch } from 'react-redux'
-import useForm from '../utility/UseForm'
-import { Login } from '../redux/action/authAction'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import FailAlert from "../components/FailAlert";
+import { LoginAction } from "../redux/action/authAction";
+import useForm from "../utility/UseForm";
 
 export default function LoginPage() {
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [alert, setAlert] = useState(false);
+  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
+
   const [form, setForm] = useForm({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
   const login = (e) => {
-    e.preventDefault()
-    dispatch(Login(form))
-    console.log('isi form', form)
-  }
-  const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`
+    e.preventDefault();
+    dispatch(LoginAction(form, navigate, () => setAlert(true)));
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("user:token");
+    if (token) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="grid lg:grid-cols-2 h-screen">
@@ -26,9 +37,9 @@ export default function LoginPage() {
           alt="banner"
         />
       </div>
-
+      {alert && <FailAlert showAlert={true} message={"Login is failed"} />}
       <section className="flex flex-col items-center justify-center mx-auto">
-        <form className="lg:w-96 w-72">
+        <form onSubmit={login} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">
             <b>Masuk</b>
           </h1>
@@ -42,7 +53,7 @@ export default function LoginPage() {
               name="email"
               placeholder="Contoh: johndee@gmail.com"
               value={form.email}
-              onChange={(e) => setForm('email', e.target.value)}
+              onChange={(e) => setForm("email", e.target.value)}
               required
             />
           </div>
@@ -53,17 +64,15 @@ export default function LoginPage() {
             <input
               className={inputStyle}
               value={form.password}
-              onChange={(e) => setForm('password', e.target.value)}
+              onChange={(e) => setForm("password", e.target.value)}
               type="password"
               name="password"
               placeholder="6+ karakter"
-              pattern="{6,}"
               required
             />
           </div>
 
           <button
-            onClick={login}
             className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}
           >
             Masuk
@@ -78,5 +87,5 @@ export default function LoginPage() {
         </form>
       </section>
     </div>
-  )
+  );
 }
