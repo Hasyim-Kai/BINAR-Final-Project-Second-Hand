@@ -1,4 +1,5 @@
 import usersAPI from "../../services/api/usersAPI";
+import JwtDecode from "../../utility/JwtDecode";
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
   if (data.password.length < 6) {
@@ -11,11 +12,12 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
       localStorage.setItem("user:token", res.data.data);
       dispatch({
         type: "SET_DATA_LOGIN",
-        payload: data,
+        payload: JwtDecode(res.data.data),
       });
       navigate("/");
     })
     .catch((err) => {
+      console.log(err);
       callback();
     });
 };
