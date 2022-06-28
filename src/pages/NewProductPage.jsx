@@ -22,7 +22,6 @@ export default function NewProductPage() {
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    dispatch(PostProduct());
     if (!selectedFile) {
       return;
     }
@@ -44,6 +43,7 @@ export default function NewProductPage() {
     if (event.target.files.length > 4) {
       event.preventDefault();
       alert(`Cannot upload files more than 4`);
+
       return;
     } else {
       setSelectedFile(Array.from(event.target.files));
@@ -52,6 +52,7 @@ export default function NewProductPage() {
 
   const submit = (e) => {
     e.preventDefault();
+    dispatch(PostProduct(form));
     console.log(form);
   };
   return (

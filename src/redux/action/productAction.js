@@ -14,9 +14,10 @@ export const getAllProduct = () => (dispatch) => {
     });
 };
 
-export const PostProduct = () => (dispatch) => {
+export const PostProduct = (data) => (dispatch) => {
+  console.log("isi data aksi ", data);
   productAPI
-    .PostProduct()
+    .PostProduct(data)
     .then((res) => {
       dispatch({
         type: "SET_PRODUCT_LIST",
