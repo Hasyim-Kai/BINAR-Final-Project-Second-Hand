@@ -2,13 +2,15 @@ import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length > 6) {
+  console.log(data);
+  if (data.password.length < 6) {
     callback();
     return;
   }
   usersAPI
     .login(data)
     .then((res) => {
+      console.log(res);
       localStorage.setItem("user:token", res.data.data);
       dispatch({
         type: "SET_DATA_LOGIN",
