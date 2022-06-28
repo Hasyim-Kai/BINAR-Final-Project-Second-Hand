@@ -1,67 +1,31 @@
 import { useState, useEffect } from "react";
-import Loading from "../components/Loading";
 import EmptyProductNotification from "../components/EmptyProductNotification";
 import SearchButton from "../components/SearchButton";
 import SecondarySearchButton from "../components/SecondarySearchButton";
 import ProductItem from "../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getContent } from "../redux/action/contentAction";
-import { countryAction } from "../redux/action/countryAction";
+import { getAllProduct } from "../redux/action/productAction";
 
 export default function HomepageProductList() {
   const dispatch = useDispatch();
+  const productList = useSelector(state => state.productReducer.productList)
 
-  // const {content} = useSelector(state=>state.contentReducer)
-  // console.log('isi content', content)
-  useEffect(() => {
-    // dispatch(getContent())
-    //  dispatch(countryAction());
-  }, []);
-  // DATA DUMMY NANTI DIGANTI DATA REAL DARI REDUX useSelector
-  let dataDummy = [
-    { name: "Jam Tangan", category: "Aksesoris", price: 250000 },
-    { name: "Jam Tangan", category: "Kesehatan", price: 210000 },
-    { name: "Jam Tangan", category: "Aksesoris", price: 230000 },
-    { name: "Jam Tangan", category: "Kesehatan", price: 150000 },
-    { name: "Jam Tangan", category: "Hobi", price: 270000 },
-    { name: "Jam Tangan", category: "Aksesoris", price: 80000 },
-    { name: "Jam Tangan", category: "Aksesoris", price: 90000 },
-    { name: "Jam Tangan", category: "Kendaraan", price: 1000 },
-    { name: "Jam Tangan", category: "Hobi", price: 350000 },
-    { name: "Jam Tangan", category: "Aksesoris", price: 320000 },
-    { name: "Jam Tangan", category: "Hobi", price: 56600 },
-  ];
-  const filterBtn = [
-    "Semua",
-    "Hobi",
-    "Kendaraan",
-    "Baju",
-    "Elektronik",
-    "Kesehatan",
-  ];
+  const filterBtn = ["Semua", "Hobi", "Kendaraan", "Baju", "Elektronik", "Kesehatan"];
   const [category, setCategory] = useState("Semua");
-  const [filteredDataDummy, setFilteredDataDummy] = useState([dataDummy]);
-  // const [filteredDataDummy, setFilteredDataDummy] = useState([content]);
+  const [filteredDataDummy, setFilteredDataDummy] = useState([]);
 
-  function onCategoryChange(categoryName) {
-    setCategory(categoryName);
-  }
+  function onCategoryChange(categoryName) { setCategory(categoryName); }
+  useEffect(() => { dispatch(getAllProduct()) }, []);
 
   useEffect(() => {
-    category === "Semua"
-      ? setFilteredDataDummy(dataDummy)
-      : setFilteredDataDummy(
-          dataDummy.filter((item) => item.category === category)
-        );
-  }, [category]);
+    category === "Semua" ? setFilteredDataDummy(productList)
+      : setFilteredDataDummy(productList.filter((item) => filterBtn[item.kategori_id] === category));
+  }, [category, productList]);
 
-  return (
-    <>
+  return <>
       <section className="container mx-auto px-2 my-10">
         {/* CATEGORY BUTTON LIST */}
-        <h1>
-          <b>Telusuri Kategori</b>
-        </h1>
+        <h1><b>Telusuri Kategori</b></h1>
         <div className="flex gap-5 mt-3 flex-wrap">
           {filterBtn.map((item) =>
             category === item ? (
@@ -86,16 +50,16 @@ export default function HomepageProductList() {
         {filteredDataDummy.length < 1 ? (
           <EmptyProductNotification isOnGrid={true} />
         ) : (
-          filteredDataDummy.map((item, index) => (
+          filteredDataDummy.map(item => (
             <ProductItem
-              key={index}
-              name={item.name}
-              category={item.category}
-              price={item.price}
+              key={item.id} id={item.id}
+              name={item.nama}
+              category={filterBtn[item.kategori_id]}
+              price={item.harga}
+              img={item.img_url}
             />
           ))
         )}
       </section>
     </>
-  );
 }

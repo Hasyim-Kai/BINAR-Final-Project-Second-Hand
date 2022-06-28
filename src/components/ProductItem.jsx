@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah"
 
 export default function ProductItem({ id = 0, name = 'null', img = "/images/cat.jpg", category = 'null', price = 0, isMine = false }) {
-   return <Link to={isMine ? '/my-product/1' : '/product/1'}>
+   return <Link to={isMine ? '/my-product/' + id : '/product/' + id}>
       <div className="p-2 border-2 border-gray-100 rounded-md w-full hover:shadow-lg hover:shadow-purple-100 transition-all duration-300">
       <div className="overflow-hidden rounded-md mb-2">
          <img className="object-cover h-28 w-full" src={img} alt="cat" />
