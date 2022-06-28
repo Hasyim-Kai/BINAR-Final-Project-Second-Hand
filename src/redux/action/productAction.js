@@ -1,4 +1,4 @@
-import productAPI from "../../api/productAPI";
+import productAPI from "../../services/api/productAPI";
 
 export const getAllProduct = () => (dispatch) => {
   productAPI
