@@ -14,18 +14,13 @@ export const getAllProduct = () => (dispatch) => {
     });
 };
 
-export const PostProduct = (data) => (dispatch) => {
-  console.log("isi data aksi ", data);
-  productAPI
-    .PostProduct(data)
-    .then((res) => {
-      dispatch({
-        type: "SET_ADD_PRODUCT",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      alert("ADD_PRODUCT_FAIL")
+export const AddNewProduct = (data, navigate) => (dispatch) => {
+  productAPI.add(data).then((res) => {
+    if(res.status === "Created"){
+        console.log(res);
+        navigate("/");
+      }}).catch((err) => {
+        console.log(err);
+        alert("ADD PRODUCT FAIL")
     });
 };
