@@ -42,11 +42,13 @@ export default function NewProductPage() {
 
   const submit = (e) => {
     e.preventDefault();
-    const dataProduct = new FormData(form.current)    
+    const dataProduct = new FormData(form.current)  
+    selectedFile.forEach(img => {
+      dataProduct.append("product_pict", img);
+    })  
     // for (var pair of dataProduct.entries()) {
     //   console.table(pair[0]+ ', ' + pair[1]); 
     // }
-
     dispatch(AddNewProduct(dataProduct, navigate));
   };
 
@@ -142,7 +144,6 @@ export default function NewProductPage() {
                 className="hidden"
                 onChange={(e) => handleUploadImages(e)}
                 type="file"
-                name="product_pict"
                 accept="image/*"
                 id="product_pict"
                 multiple
