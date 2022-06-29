@@ -1,6 +1,5 @@
 import axios from "axios";
 
-const token = localStorage.getItem("user:token");
 export default {
   login: (credentials) =>
     axios.post(
@@ -12,7 +11,7 @@ export default {
       "https://second-hand-kelompok-5.herokuapp.com/api/register",
       credentials
     ),
-  getProfile: () =>
+  getProfile: (token) =>
     axios.get("https://second-hand-kelompok-5.herokuapp.com/api/profile", {
       headers: {
         Authorization: `Bearer ${token}`,

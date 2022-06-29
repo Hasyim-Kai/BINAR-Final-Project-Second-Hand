@@ -28,7 +28,7 @@ export default function ProfilePage() {
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    dispatch(GetProfile());
+    dispatch(GetProfile(token));
     dispatch(countryAction());
     if (!selectedFile) {
       return;

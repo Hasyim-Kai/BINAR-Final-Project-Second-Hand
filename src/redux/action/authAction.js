@@ -2,24 +2,25 @@ import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length < 6) {
+  if (data.password.length > 6) {
+    usersAPI
+      .login(data)
+      .then((res) => {
+        localStorage.setItem("user:token", res.data.data);
+        dispatch({
+          type: "SET_DATA_LOGIN",
+          payload: JwtDecode(res.data.data),
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        callback();
+      });
+  } else {
     callback();
     return;
   }
-  usersAPI
-    .login(data)
-    .then((res) => {
-      localStorage.setItem("user:token", res.data.data);
-      dispatch({
-        type: "SET_DATA_LOGIN",
-        payload: JwtDecode(res.data.data),
-      });
-      navigate("/");
-    })
-    .catch((err) => {
-      console.log(err);
-      callback();
-    });
 };
 
 export const RegisterAction = (data, callback) => (dispatch) => {
@@ -44,9 +45,9 @@ export const RegisterAction = (data, callback) => (dispatch) => {
   }
 };
 
-export const GetProfile = () => (dispatch) => {
+export const GetProfile = (token) => (dispatch) => {
   usersAPI
-    .getProfile()
+    .getProfile(token)
     .then(
       (res) => (
         console.log("isi get profile ", res?.data?.data),
