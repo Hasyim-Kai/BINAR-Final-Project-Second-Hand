@@ -14,6 +14,17 @@ export const getAllProduct = () => (dispatch) => {
     });
 };
 
+export const getSellerProduct = () => (dispatch) => {
+  productAPI.getMyProduct().then((res) => {
+      dispatch({
+        type: "SET_MY_PRODUCT_LIST",
+        payload: res.data.data,
+      });
+    }).catch((err) => {
+      console.log(err);
+    });
+};
+
 export const getDetailProduct = () => (dispatch) => {
   productAPI
     .getDetailProduct()
