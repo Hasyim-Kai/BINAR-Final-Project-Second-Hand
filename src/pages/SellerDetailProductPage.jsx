@@ -2,7 +2,6 @@ import IdentityCard from "../components/IdentityCard";
 import PurpleButton from "../components/PurpleButton";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 import { useParams } from "react-router-dom";
-
 export default function SellerDetailProductPage() {
     let { id } = useParams();
 
