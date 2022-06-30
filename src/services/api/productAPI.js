@@ -9,6 +9,11 @@ export default {
       "https://second-hand-kelompok-5.herokuapp.com/api/product",
       config
     ),
+    getDetailProduct: () =>
+    axios.get(
+      "https://second-hand-kelompok-5.herokuapp.com/api/product/id/1",
+      config
+    ),
   add: (postData) =>
     axios.post(
       "https://second-hand-kelompok-5.herokuapp.com/api/product",

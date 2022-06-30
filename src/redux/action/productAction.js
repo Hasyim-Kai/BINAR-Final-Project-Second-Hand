@@ -14,6 +14,20 @@ export const getAllProduct = () => (dispatch) => {
     });
 };
 
+export const getDetailProduct = () => (dispatch) => {
+  productAPI
+    .getDetailProduct()
+    .then((res) => {
+      dispatch({
+        type: "SET_PRODUCT_DETAIL",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const AddNewProduct = (data, navigate) => (dispatch) => {
   productAPI.add(data).then((res) => {
     if(res.status === "Created"){
