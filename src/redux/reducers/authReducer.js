@@ -19,7 +19,6 @@ const authReducer = (state = initialState, action) => {
         dataRegister: action.payload,
       };
     case "SET_DATA_GET_PROFILE":
-      console.log("isi profile reducer", action.payload);
       return {
         ...state,
         dataGetProfile: action.payload,

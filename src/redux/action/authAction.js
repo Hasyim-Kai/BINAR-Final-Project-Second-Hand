@@ -1,31 +1,32 @@
+import { Axios } from "axios";
 import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
+const token = localStorage.getItem("user:token");
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  console.log(data);
-  if (data.password.length < 6) {
+  if (data.password.length > 6) {
+    usersAPI
+      .login(data)
+      .then((res) => {
+        localStorage.setItem("user:token", res.data.data);
+        dispatch({
+          type: "SET_DATA_LOGIN",
+          payload: JwtDecode(res.data.data),
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        callback();
+      });
+  } else {
     callback();
     return;
   }
-  usersAPI
-    .login(data)
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem("user:token", res.data.data);
-      dispatch({
-        type: "SET_DATA_LOGIN",
-        payload: JwtDecode(res.data.data),
-      });
-      navigate("/");
-    })
-    .catch((err) => {
-      console.log(err);
-      callback();
-    });
 };
 
-export const RegisterAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length > 6) {
+export const RegisterAction = (data, callback) => (dispatch) => {
+  if (data.password.length >= 6) {
     usersAPI
       .register(data)
       .then((res) => {
@@ -46,17 +47,33 @@ export const RegisterAction = (data, navigate, callback) => (dispatch) => {
   }
 };
 
-export const GetProfile = () => (dispatch) => {
+export const GetProfile = (token) => (dispatch) => {
   usersAPI
-    .getProfile()
-    .then(
-      (res) => (
-        console.log("isi get profile ", res?.data?.data),
-        dispatch({
-          type: "SET_DATA_GET_PROFILE",
-          payload: res?.data?.data,
-        })
-      )
-    )
-    .catch((err) => console.log(err));
+    .getProfile(token)
+    .then((res) => {
+      // console.log("isi get profile ", res?.data?.data);
+      dispatch({
+        type: "SET_DATA_GET_PROFILE",
+        payload: res?.data?.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
+
+export const UpdateProfile =
+  ({ form, selectedFile }) =>
+  (dispatch) => {
+    console.log("isi action ", form);
+    var formdata = new FormData();
+    formdata.append("name", form.name);
+    formdata.append("phone_number", form.phone_number);
+    formdata.append("address", form.address);
+    formdata.append("profile_pict", selectedFile);
+    formdata.append("city_id", form.city_id);
+
+    usersAPI.updateProfile(formdata, token);
+    // .then((res) => console.log(res))
+    // .catch((err) => console.log(err));
+  };

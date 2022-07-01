@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginNavbar from "./components/LoginNavbar";
 import UserNavbar from "./components/UserNavbar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -16,7 +15,8 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 
 export default function AppRoutes() {
-   return <BrowserRouter >
+  return (
+    <BrowserRouter>
       {/* <LoginNavbar /> */}
       <UserNavbar />
       <main>
@@ -36,5 +36,6 @@ export default function AppRoutes() {
             <Route path='*' element={<NotFound />} />
          </Routes>
       </main>
-   </BrowserRouter >
+    </BrowserRouter>
+  );
 }
