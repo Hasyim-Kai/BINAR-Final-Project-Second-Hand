@@ -31,11 +31,11 @@ export const RegisterAction = (data, callback) => (dispatch) => {
       .register(data)
       .then((res) => {
         callback();
-        console.log(res);
         dispatch({
           type: "SET_DATA_REGISTER",
           payload: data,
         });
+        navigate("/login");
       })
       .catch((err) => {
         console.log(err);

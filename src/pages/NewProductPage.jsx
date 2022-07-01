@@ -1,31 +1,19 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import useForm from "../utility/UseForm";
-import FailAlert from "../components/FailAlert";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { PostProduct } from "../redux/action/productAction";
+import { AddNewProduct } from "../redux/action/productAction";
 
 export default function NewProductPage() {
+  const form = useRef(null)
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [alert, setAlert] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState([]);
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
 
-  const [form, setForm] = useForm({
-    nama_product: "",
-    harga_product: "",
-    kategori: "",
-    deskripsi: "",
-    fotoproduct: "",
-  });
-
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    dispatch(PostProduct());
-    if (!selectedFile) {
-      return;
-    }
+    if (!selectedFile) { return; }
 
     let temporaryPreview = [];
     selectedFile.forEach((image) => {
@@ -35,9 +23,7 @@ export default function NewProductPage() {
 
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl)
-    return () => {
-      preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview));
-    };
+    return () => { preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview)); };
   }, [selectedFile]);
 
   function handleUploadImages(event) {
@@ -46,27 +32,41 @@ export default function NewProductPage() {
       alert(`Cannot upload files more than 4`);
       return;
     } else {
-      setSelectedFile(Array.from(event.target.files));
+      let imageList = Array.from(event.target.files)
+      imageList.forEach( image => { if(image.size > 637822){ 
+        alert(`Max Image Size is 500 kb`); return;
+      }})
+      setSelectedFile(imageList);
     }
   }
 
   const submit = (e) => {
     e.preventDefault();
-    console.log(form);
+    const dataProduct = new FormData(form.current)  
+    selectedFile.forEach(img => {
+      // console.log(img)
+      dataProduct.append("product_pict", img, img.name);
+    })  
+    // for (var pair of dataProduct.entries()) {
+    //   console.table(pair[0]+ ', ' + pair[1]); 
+    // }
+    dispatch(AddNewProduct(dataProduct, navigate));
   };
+
   return (
     <div className="min-h-screen max-w-4xl mx-auto relative flex flex-col items-center gap-4 pt-10">
       {/* show alert */}
-      {alert && (
+      {/* {alert && (
         <FailAlert
           showAlert={true}
           message={"Cannot upload files more than 1 MB"}
         />
-      )}
+      )} */}
       <Link className="absolute left-28" to="/">
         <img src="/icons/fi_arrow-left.svg" alt="arrow left" />
       </Link>
       <form
+        ref={form}
         onSubmit={submit}
         className="w-3/5 mb-24"
         encType="multipart/form-data"
@@ -77,9 +77,9 @@ export default function NewProductPage() {
           <input
             className={inputStyle}
             type="text"
-            name="name"
-            placeholder="Nama Lengkap"
-            onChange={(e) => setForm("nama_product", e.target.value)}
+            name="nama"
+            placeholder="Nama Produk"
+            // onChange={(e) => setForm("nama", e.target.value)}
             required
           />
         </div>
@@ -90,9 +90,9 @@ export default function NewProductPage() {
           <input
             className={inputStyle}
             type="number"
-            name="hargaProduk"
+            name="harga"
             placeholder="Rp. 0,0"
-            onChange={(e) => setForm("harga_product", e.target.value)}
+            // onChange={(e) => setForm("harga", e.target.value)}
             required
           />
         </div>
@@ -103,16 +103,16 @@ export default function NewProductPage() {
 
           <select
             className={inputStyle}
-            name="category"
-            id="category"
-            onChange={(e) => setForm("kategori", e.target.value)}
+            name="kategori_id"
+            id="kategori_id"
+            required
+            // onChange={(e) => setForm("kategori_id", e.target.value)}
           >
-            <option value="semua">Semua</option>
-            <option value="hobi">Hobi</option>
-            <option value="kendaraan">Kendaraan</option>
-            <option value="baju">Baju</option>
-            <option value="elektronik">Elektronik</option>
-            <option value="kesehatan">Kesehatan</option>
+            <option value="1">Hobi</option>
+            <option value="2">Kendaraan</option>
+            <option value="3">Baju</option>
+            <option value="4">Elektronik</option>
+            <option value="5">Kesehatan</option>
           </select>
         </div>
 
@@ -121,18 +121,19 @@ export default function NewProductPage() {
           <br />
           <textarea
             className={inputStyle}
-            name="Deskripsi"
+            name="deskripsi"
             cols="10"
             rows="4"
-            onChange={(e) => setForm("deskripsi", e.target.value)}
+            // onChange={(e) => setForm("deskripsi", e.target.value)}
             placeholder="Contoh: Jalan Ikan Hiu 33"
+            required
           ></textarea>
         </div>
 
         <label>Foto Produk</label>
         <div className="mb-7 flex flex-wrap gap-4">
           <div className="w-28">
-            <label htmlFor="productPhoto" className="cursor-pointer">
+            <label htmlFor="product_pict" className="cursor-pointer">
               <div className="border-dashed border-2 overflow-hidden w-28 h-28 rounded-xl">
                 <img
                   className={`mx-auto mt-10`}
@@ -142,13 +143,10 @@ export default function NewProductPage() {
               </div>
               <input
                 className="hidden"
-                onChange={(e) =>
-                  handleUploadImages(e, setSelectedFile, () => setAlert(true))
-                }
+                onChange={(e) => handleUploadImages(e)}
                 type="file"
-                name="productPhoto"
-                accept="image/*"
-                id="productPhoto"
+                accept=".png,.jpg,.jpeg"
+                id="product_pict"
                 multiple
               />
             </label>
@@ -161,15 +159,13 @@ export default function NewProductPage() {
                 <img
                   className={`object-cover h-full w-full`}
                   src={imagePreview}
-                  alt="plus"
+                  alt="imagePreview"
                 />
               </div>
             ))}
         </div>
 
-        <button
-          className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}
-        >
+        <button className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}>
           Simpan
         </button>
       </form>

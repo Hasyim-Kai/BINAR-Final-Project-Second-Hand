@@ -1,4 +1,4 @@
-import productAPI from "../../api/productAPI";
+import productAPI from "../../services/api/productAPI";
 
 export const getAllProduct = () => (dispatch) => {
   productAPI
@@ -14,16 +14,45 @@ export const getAllProduct = () => (dispatch) => {
     });
 };
 
-export const PostProduct = () => (dispatch) => {
+export const getSellerProduct = () => (dispatch) => {
   productAPI
-    .PostProduct()
+    .getMyProduct()
     .then((res) => {
       dispatch({
-        type: "SET_PRODUCT_LIST",
+        type: "SET_MY_PRODUCT_LIST",
         payload: res.data.data,
       });
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const getDetailProduct = (id) => (dispatch) => {
+  productAPI
+    .getDetailProduct(id)
+    .then((res) => {
+      dispatch({
+        type: "SET_PRODUCT_DETAIL",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const AddNewProduct = (data, navigate) => (dispatch) => {
+  productAPI
+    .add(data)
+    .then((res) => {
+      if (res.status === "Created") {
+        console.log(res);
+        navigate("/");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("ADD PRODUCT FAIL");
     });
 };

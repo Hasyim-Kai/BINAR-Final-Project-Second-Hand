@@ -6,14 +6,13 @@ import ProductItem from "../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getSellerProduct } from "../redux/action/productAction";
 
-export default function SellerProductPage() {
-    const dispatch = useDispatch();
-    const { sellerProductList } = useSelector( state => state.productReducer )
+export default function BuyerWishlistPage() {
+    const { dataLogin } = useSelector( state => state.authReducer )
+    const token = localStorage.getItem("user:token");
     const productCategory = ["Semua", "Hobi", "Kendaraan", "Baju", "Elektronik", "Kesehatan"];
-    useEffect(() => { dispatch(getSellerProduct()) }, []);
 
     return <div className="min-h-screen max-w-5xl mx-auto pt-10">
-        <h1 className="text-2xl mb-7"><b>Daftar Jual Saya</b></h1>
+        <h1 className="text-2xl mb-7"><b>Daftar Wishlist Saya</b></h1>
         <IdentityCard namaPenjual="Sugiono" kota="Japan" isEditEnabled={true} />
 
         <div className="flex flex-wrap justify-between">
@@ -21,16 +20,9 @@ export default function SellerProductPage() {
 
             {/* <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto"> */}
             <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto">
-
-                {sellerProductList.length >= 4 ? <></> 
-                : <Link to='/new-product'><div className="border-dashed border-2 text-center overflow-hidden w-full md:w-52 h-56 rounded-xl">
-                    <img className={`mx-auto mt-20`} src="/icons/grey_fi_plus.svg" alt="plus" />
-                    Tambah Produk
-                </div></Link>}
-
-                {sellerProductList.map((item, index) => 
+                {/* {sellerProductList.map((item, index) => 
                     <ProductItem key={index} id={item.id} name={item.nama} category={productCategory[item.kategori_id]}
-                    price={item.harga} img={item.img_url} isMine={true}/>)}
+                    price={item.harga} img={item.img_url} isMine={true}/>)} */}
             </section>
         </div>
     </div>
