@@ -1,4 +1,6 @@
 import axios from "axios";
+// const token = localStorage.getItem("user:token");
+// let config = { headers: { Authorization: "Bearer " + token } };
 
 export default {
   login: (credentials) =>
@@ -17,4 +19,18 @@ export default {
         Authorization: `Bearer ${token}`,
       },
     }),
+  updateProfile: (formData, token) => {
+    axios
+      .put(
+        "https://second-hand-kelompok-5.herokuapp.com/api/profile",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  },
 };
