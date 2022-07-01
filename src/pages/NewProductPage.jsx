@@ -44,7 +44,8 @@ export default function NewProductPage() {
     e.preventDefault();
     const dataProduct = new FormData(form.current)  
     selectedFile.forEach(img => {
-      dataProduct.append("product_pict", img);
+      // console.log(img)
+      dataProduct.append("product_pict", img, img.name);
     })  
     // for (var pair of dataProduct.entries()) {
     //   console.table(pair[0]+ ', ' + pair[1]); 
@@ -144,7 +145,7 @@ export default function NewProductPage() {
                 className="hidden"
                 onChange={(e) => handleUploadImages(e)}
                 type="file"
-                accept="image/*"
+                accept=".png,.jpg,.jpeg"
                 id="product_pict"
                 multiple
               />
