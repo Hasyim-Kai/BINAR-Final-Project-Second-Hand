@@ -14,14 +14,15 @@ export default {
       "https://second-hand-kelompok-5.herokuapp.com/api/product/myproduct",
       config
     ),
-    getDetailProduct: () =>
+  getDetailProduct: (id) =>
     axios.get(
-      "https://second-hand-kelompok-5.herokuapp.com/api/product/id/1",
+      `https://second-hand-kelompok-5.herokuapp.com/api/product/id/${id}`,
       config
     ),
   add: (postData) =>
     axios.post(
       "https://second-hand-kelompok-5.herokuapp.com/api/product",
-      postData, config
+      postData,
+      config
     ),
 };
