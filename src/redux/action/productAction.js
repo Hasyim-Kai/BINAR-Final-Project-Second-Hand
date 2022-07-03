@@ -34,7 +34,7 @@ export const getDetailProduct = (id) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: "SET_PRODUCT_DETAIL",
-        payload: res.data.data,
+        payload: res?.data?.data,
       });
     })
     .catch((err) => {

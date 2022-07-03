@@ -1,4 +1,3 @@
-import { Axios } from "axios";
 import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 const token = localStorage.getItem("user:token");

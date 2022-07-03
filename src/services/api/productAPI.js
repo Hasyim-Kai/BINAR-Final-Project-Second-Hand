@@ -13,8 +13,7 @@ export default {
     ),
   getDetailProduct: (id) =>
     axios.get(
-      `https://second-hand-kelompok-5.herokuapp.com/api/product/id/${id}`,
-      config
+      `https://second-hand-kelompok-5.herokuapp.com/api/product/id/${id}`
     ),
   add: (postData) =>
     axios.post(

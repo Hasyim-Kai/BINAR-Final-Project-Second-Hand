@@ -5,7 +5,6 @@ import SecondarySearchButton from "../components/SecondarySearchButton";
 import ProductItem from "../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../redux/action/productAction";
-import { useLocation } from "react-router-dom";
 
 export default function HomepageProductList() {
   const dispatch = useDispatch();
