@@ -13,6 +13,7 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
           payload: JwtDecode(res.data.data),
         });
         navigate("/");
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);

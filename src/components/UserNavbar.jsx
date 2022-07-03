@@ -18,6 +18,7 @@ export default function UserNavbar() {
   const logout = () => {
     localStorage.clear();
     navigate("/");
+    window.location.reload(false);
   };
 
   useEffect(() => {
@@ -55,17 +56,15 @@ export default function UserNavbar() {
             </button>
           </Link>
           <NotificationDropdown />
-          <Link to={token ? "profile" : "login"} state={dataGetProfile}>
+          <Link to={"profile"} state={dataGetProfile}>
             <button className="">
               <img src="/icons/fi_user.svg" alt="user" />
             </button>
           </Link>
 
-          {token && (
-            <button className="" onClick={logout}>
-              <img src="/icons/iconlogout.svg" alt="logout" />
-            </button>
-          )}
+          <button className="" onClick={logout}>
+            <img src="/icons/iconlogout.svg" alt="logout" />
+          </button>
         </div>
       </div>
     </nav>

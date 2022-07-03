@@ -13,28 +13,33 @@ import BuyerWishlistPage from "./pages/BuyerWishlistPage";
 import SellerSoldProductPage from "./pages/SellerSoldProductPage";
 import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
+import LoginNavbar from "./components/LoginNavbar";
 
 export default function AppRoutes() {
+  const token = localStorage.getItem("user:token");
   return (
     <BrowserRouter>
-      {/* <LoginNavbar /> */}
-      <UserNavbar />
+      {token == null ? <LoginNavbar /> : <UserNavbar />}
+
       <main>
-         <Routes>
-            <Route path='login' element={<LoginPage />} />
-            <Route path='register' element={<RegisterPage />} />
-            <Route index element={<HomePage />} />
-            <Route path='new-product' element={<NewProductPage />} />
-            <Route path='product/:id' element={<BuyerDetailProductPage />} />
-            <Route path='my-product/:id' element={<SellerDetailProductPage />} />
-            <Route path='my-order' element={<SellerProductOrder />} />
-            <Route path='my-interested' element={<SellerInterestedProductPage />} />
-            <Route path='my-wishlist' element={<BuyerWishlistPage />} />
-            <Route path='my-sold' element={<SellerSoldProductPage />} />
-            <Route path='offer' element={<SellerProductPage />} />
-            <Route path='profile' element={<ProfilePage />} />
-            <Route path='*' element={<NotFound />} />
-         </Routes>
+        <Routes>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route index element={<HomePage />} />
+          <Route path="new-product" element={<NewProductPage />} />
+          <Route path="product/:id" element={<BuyerDetailProductPage />} />
+          <Route path="my-product/:id" element={<SellerDetailProductPage />} />
+          <Route path="my-order" element={<SellerProductOrder />} />
+          <Route
+            path="my-interested"
+            element={<SellerInterestedProductPage />}
+          />
+          <Route path="my-wishlist" element={<BuyerWishlistPage />} />
+          <Route path="my-sold" element={<SellerSoldProductPage />} />
+          <Route path="offer" element={<SellerProductPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </main>
     </BrowserRouter>
   );
