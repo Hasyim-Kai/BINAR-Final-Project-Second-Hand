@@ -1,6 +1,8 @@
 import productAPI from "../../services/api/productAPI";
+import { setLoading } from "./globalAction";
 
 export const getAllProduct = () => (dispatch) => {
+  dispatch(setLoading(true));
   productAPI
     .getAll()
     .then((res) => {
@@ -8,6 +10,7 @@ export const getAllProduct = () => (dispatch) => {
         type: "SET_PRODUCT_LIST",
         payload: res.data.data,
       });
+      dispatch(setLoading(false));
     })
     .catch((err) => {
       console.log(err);

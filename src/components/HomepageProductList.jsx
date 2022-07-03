@@ -5,11 +5,13 @@ import SecondarySearchButton from "../components/SecondarySearchButton";
 import ProductItem from "../components/ProductItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../redux/action/productAction";
+import Loading from "../components/Loading";
 
 export default function HomepageProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productReducer.productList);
-
+  const isLoading = useSelector((state) => state.globalReducer.isLoading);
+  console.log("home page : ", isLoading);
   const filterBtn = [
     "Semua",
     "Hobi",
@@ -43,23 +45,28 @@ export default function HomepageProductList() {
         <h1>
           <b>Telusuri Kategori</b>
         </h1>
-        <div className="flex gap-5 mt-3 flex-wrap">
-          {filterBtn.map((item) =>
-            category === item ? (
-              <SearchButton
-                text={item}
-                anyFunction={onCategoryChange}
-                key={item}
-              />
-            ) : (
-              <SecondarySearchButton
-                text={item}
-                anyFunction={onCategoryChange}
-                key={item}
-              />
-            )
-          )}
-        </div>
+        {isLoading == true ? (
+          <Loading />
+        ) : (
+          <div className="flex gap-5 mt-3 flex-wrap">
+            {filterBtn.map((item) =>
+              category === item ? (
+                <SearchButton
+                  text={item}
+                  anyFunction={onCategoryChange}
+                  key={item}
+                />
+              ) : (
+                <SecondarySearchButton
+                  text={item}
+                  anyFunction={onCategoryChange}
+                  key={item}
+                />
+              )
+            )}
+          </div>
+        )}
+        {/* <Loading /> */}
       </section>
 
       {/* ITEM LIST */}
