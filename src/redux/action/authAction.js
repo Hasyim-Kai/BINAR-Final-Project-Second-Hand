@@ -11,7 +11,6 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
         dispatch({
           type: "SET_DATA_LOGIN",
           payload: JwtDecode(res.data.data),
-          // payload: JwtDecode(res.data.data),
         });
         navigate("/");
       })

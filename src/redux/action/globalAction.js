@@ -4,3 +4,10 @@ export const setLoading = (payload) => {
     payload,
   };
 };
+
+export const setError = (payload) => {
+  return {
+    type: "SET_ERROR",
+    payload,
+  };
+};

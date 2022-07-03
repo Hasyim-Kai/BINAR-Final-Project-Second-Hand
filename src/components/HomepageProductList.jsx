@@ -11,7 +11,6 @@ export default function HomepageProductList() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productReducer.productList);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
-  console.log("home page : ", isLoading);
   const filterBtn = [
     "Semua",
     "Hobi",

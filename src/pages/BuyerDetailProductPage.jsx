@@ -1,12 +1,11 @@
-import IdentityCard from "../components/IdentityCard";
-import PurpleButton from "../components/PurpleButton";
 import { useEffect, useState } from "react";
-import { ConvertToRupiah } from "../utility/ConvertToRupiah";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import BuyerModal from "../components/BuyerModal";
-import { useDispatch, useSelector } from "react-redux";
+import IdentityCard from "../components/IdentityCard";
+import PurpleButton from "../components/PurpleButton";
 import { getDetailProduct } from "../redux/action/productAction";
-import productAPI from "../services/api/productAPI";
+import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
