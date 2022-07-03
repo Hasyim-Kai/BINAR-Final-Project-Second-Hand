@@ -12,6 +12,7 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
         dispatch({
           type: "SET_DATA_LOGIN",
           payload: JwtDecode(res.data.data),
+          // payload: JwtDecode(res.data.data),
         });
         navigate("/");
       })
@@ -25,7 +26,7 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
   }
 };
 
-export const RegisterAction = (data, callback) => (dispatch) => {
+export const RegisterAction = (data, navigate, callback) => (dispatch) => {
   if (data.password.length >= 6) {
     usersAPI
       .register(data)

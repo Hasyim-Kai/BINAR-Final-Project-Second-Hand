@@ -5,10 +5,7 @@ let config = { headers: { Authorization: "Bearer " + token } };
 
 export default {
   getAll: () =>
-    axios.get(
-      "https://second-hand-kelompok-5.herokuapp.com/api/product",
-      config
-    ),
+    axios.get("https://second-hand-kelompok-5.herokuapp.com/api/product"),
   getMyProduct: () =>
     axios.get(
       "https://second-hand-kelompok-5.herokuapp.com/api/product/myproduct",

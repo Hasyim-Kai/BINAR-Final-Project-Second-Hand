@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
@@ -6,10 +5,8 @@ import FailAlert from "../components/FailAlert";
 import { UpdateProfile } from "../redux/action/authAction";
 import { countryAction } from "../redux/action/countryAction";
 import { HandleUploadImages } from "../utility/HandleUploadImages";
-import useForm from "../utility/UseForm";
 
 export default function ProfilePage() {
-  // const form = useRef(null);
   const dispatch = useDispatch();
   const location = useLocation();
   const data = location.state;
@@ -26,15 +23,6 @@ export default function ProfilePage() {
   const [address, setAddress] = useState(data.address);
   const [cityId, setCityId] = useState(data.city_id);
 
-  // console.log("tangkap data", data);
-
-  // const [form, setForm] = useForm({
-  //   name: data.name,
-  //   phone_number: data.phone_number,
-  //   address: data.address,
-  //   city_id: data.city_id,
-  // });
-
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
     console.log(country);
@@ -43,10 +31,6 @@ export default function ProfilePage() {
     if (!selectedFile) {
       return;
     }
-
-    // if (data.img_url == null) {
-    //   setPreview(data.img_url);
-    // }
 
     // show image after select
     let objectUrl = URL.createObjectURL(selectedFile);
@@ -58,9 +42,6 @@ export default function ProfilePage() {
     // console.log(preview);
   }, [selectedFile, countryAction]);
 
-  // const getIdCity = (e) => {
-  //   setNameCity(e.target.value);
-  // };
   const submit = (e) => {
     e.preventDefault();
     const form = {
@@ -88,7 +69,7 @@ export default function ProfilePage() {
         <div className="overflow-hidden w-28 h-28 rounded-xl hover:scale-110 transition-all duration-300">
           <img
             className={`object-cover h-full w-full`}
-            src={preview}
+            src={data.img_url == null ? preview : data.img_url}
             alt="cat"
           />
         </div>

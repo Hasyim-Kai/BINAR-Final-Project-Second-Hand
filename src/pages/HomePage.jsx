@@ -7,20 +7,21 @@ import HomepageProductList from "../components/HomepageProductList";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { dataLogin } = useSelector(state => state.authReducer)
+  const { dataLogin } = useSelector((state) => state.authReducer);
 
   useEffect(() => {
-    if(dataLogin === null){
-      console.log('Data Login Kosong');
+    if (dataLogin !== null) {
+      console.log("Data Login Kosong");
       const token = localStorage.getItem("user:token");
       dispatch({
         type: "SET_DATA_LOGIN",
         payload: JwtDecode(token),
       });
     }
-  }, [])
-  
-  return <div className="min-h-screen">
+  }, []);
+
+  return (
+    <div className="min-h-screen">
       {/* BANNER */}
       <HomePageBanner />
 
@@ -30,4 +31,5 @@ export default function HomePage() {
       {/* SELL BUTTON */}
       <SellButton />
     </div>
+  );
 }
