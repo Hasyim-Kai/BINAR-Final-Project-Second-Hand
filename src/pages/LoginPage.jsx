@@ -81,11 +81,7 @@ const LoginPage = () => {
 
           <div className="text-center mt-5">
             <span>Belum punya akun? </span>
-            <Link
-              className="text-primaryPurple"
-              to="/register"
-              onClick={() => window.location.reload(false)}
-            >
+            <Link className="text-primaryPurple" to="/register">
               <b>Daftar disini</b>
             </Link>
           </div>
