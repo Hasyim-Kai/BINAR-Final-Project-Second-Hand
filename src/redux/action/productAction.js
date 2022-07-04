@@ -46,13 +46,9 @@ export const getDetailProduct = (id) => (dispatch) => {
 };
 
 export const AddNewProduct = (data, navigate) => (dispatch) => {
-  productAPI
-    .add(data)
-    .then((res) => {
-      if (res.status === "Created") {
-        console.log(res);
-        navigate("/");
-      }
+  productAPI.add(data).then((res) => {
+      console.log(res);
+      navigate("/offer/?isAddProductSuccess=true");
     })
     .catch((err) => {
       console.log(err);
