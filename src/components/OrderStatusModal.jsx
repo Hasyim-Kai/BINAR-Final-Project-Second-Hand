@@ -1,6 +1,6 @@
 
 export default function OrderStatusModal({ modalState = false, closeModal = () => { } }) {
-    return <div className={`${modalState ? 'block' : 'hidden'} absolute top-0 w-full h-full bg-black/80 z-50`}>
+    return <div className={`${modalState ? 'block' : 'hidden'} absolute z-50 top-0 w-full h-full bg-black/80 z-50`}>
         {/* MODAL CARD */}
         <section className={`${modalState ? 'block' : 'hidden'} relative max-w-xs p-5 mx-auto mt-20 rounded-xl bg-white`}>
             <button className="absolute right-7" onClick={closeModal}><b>X</b></button>
