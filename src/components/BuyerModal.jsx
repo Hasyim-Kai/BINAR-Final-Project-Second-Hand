@@ -5,7 +5,7 @@ import IdentityCard from "../components/IdentityCard";
 export default function BuyerModal({ modalState = false, closeModal = () => { } }) {
     const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`
 
-    return <div className={`${modalState ? 'block' : 'hidden'} absolute top-0 w-full h-full bg-black/80`}>
+    return <div className={`${modalState ? 'block' : 'hidden'} absolute z-50 top-0 w-full h-full bg-black/80`}>
         {/* MODAL CARD */}
         <section className={`${modalState ? 'block' : 'hidden'} relative max-w-xs p-5 mx-auto mt-20 rounded-xl bg-white`}>
             <button className="absolute right-7" onClick={closeModal}><b>X</b></button>
