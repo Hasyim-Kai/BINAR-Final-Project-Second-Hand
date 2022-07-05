@@ -15,8 +15,12 @@ export default function BuyerDetailProductPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
 
-  function openCloseModal() { setIsModalOpen(!isModalOpen); }
-  useEffect(() => { dispatch(getDetailProduct(id)); }, []);
+  function openCloseModal() {
+    setIsModalOpen(!isModalOpen);
+  }
+  useEffect(() => {
+    dispatch(getDetailProduct(id));
+  }, []);
 
   useEffect(() => {
     dispatch(getDetailProduct(id));
@@ -32,11 +36,13 @@ export default function BuyerDetailProductPage() {
         image={buyerDetailProduct?.img_url}
       />
       <div className="min-h-screen max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 pt-10">
-        <section className="lg:col-span-2">          
-          <ProductImageCarousel productImages={buyerDetailProduct?.img_url}/>
+        <section className="lg:col-span-2">
+          <ProductImageCarousel productImages={buyerDetailProduct?.img_url} />
 
           <div className="border rounded-xl p-4 mt-5">
-            <h1 className="mb-2"><b>Deskripsi</b></h1>
+            <h1 className="mb-2">
+              <b>Deskripsi</b>
+            </h1>
             <p>{buyerDetailProduct?.deskripsi}</p>
           </div>
         </section>
@@ -63,5 +69,6 @@ export default function BuyerDetailProductPage() {
           />
         </section>
       </div>
-  </div>
+    </div>
+  );
 }
