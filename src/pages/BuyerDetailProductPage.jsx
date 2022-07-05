@@ -10,7 +10,6 @@ import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
   const { buyerDetailProduct } = useSelector((state) => state.productReducer);
-  // const image = buyerDetailProduct?.img_url;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
@@ -25,7 +24,13 @@ export default function BuyerDetailProductPage() {
 
   return (
     <div className="relative">
-      <BuyerModal modalState={isModalOpen} closeModal={openCloseModal} />
+      <BuyerModal
+        modalState={isModalOpen}
+        closeModal={openCloseModal}
+        nama={buyerDetailProduct?.nama}
+        harga={buyerDetailProduct?.harga}
+        image={buyerDetailProduct?.img_url}
+      />
       <div className="min-h-screen max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 pt-10">
         <section className="lg:col-span-2">
           <div className="overflow-hidden rounded-xl hover:scale-110 hover:shadow-lg transition-all duration-500">
