@@ -6,6 +6,7 @@ import PurpleButton from "../components/PurpleButton";
 import { postTransaction } from "../redux/action/transactionAction";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
+<<<<<<< HEAD
 export default function BuyerModal({
   id,
   modalState = false,
@@ -14,6 +15,9 @@ export default function BuyerModal({
   harga = "null",
   image = "/images/cat.jpg",
 }) {
+=======
+export default function BuyerModal({modalState = false, closeModal = () => {}, nama, harga, image}) {
+>>>>>>> 249f5ffb2b416ccf8b8b432962a75eb71326647a
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   const [data, setData] = useState("");
   const dispatch = useDispatch();

@@ -34,7 +34,9 @@ export default function BuyerDetailProductPage() {
       />
       <div className="min-h-screen max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 pt-10">
         <section className="lg:col-span-2">
-          <ProductImageCarousel productImages={buyerDetailProduct?.img_url} />
+          {buyerDetailProduct.img_url && (
+            <ProductImageCarousel productImages={buyerDetailProduct.img_url} />
+          )}
 
           <div className="border rounded-xl p-4 mt-5">
             <h1 className="mb-2">
