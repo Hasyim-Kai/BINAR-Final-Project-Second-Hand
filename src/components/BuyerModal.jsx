@@ -1,23 +1,35 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import IdentityCard from "../components/IdentityCard";
 import PurpleButton from "../components/PurpleButton";
+import { postTransaction } from "../redux/action/transactionAction";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
 export default function BuyerModal({
+  id,
   modalState = false,
   closeModal = () => {},
-  nama,
-  harga,
-  image,
+  nama = "null",
+  harga = "null",
+  image = "/images/cat.jpg",
 }) {
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   const [data, setData] = useState("");
+  const dispatch = useDispatch();
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
 
+  // useEffect(() => {
+  //   dispatch(postTransaction(id, data));
+  // }, []);
   return (
     <div
       className={`${
         modalState ? "block" : "hidden"
-      } absolute top-0 w-full h-full bg-black/80`}
+      } absolute top-0 w-full h-full bg-black/80 z-30`}
     >
       {/* MODAL CARD */}
       <section
@@ -42,7 +54,7 @@ export default function BuyerModal({
           image={image[0].img_url}
         />
 
-        <form>
+        <form onSubmit={submit}>
           <div>
             <label>Harga Tawar</label>
             <br />

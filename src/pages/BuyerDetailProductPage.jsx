@@ -22,13 +22,10 @@ export default function BuyerDetailProductPage() {
     dispatch(getDetailProduct(id));
   }, []);
 
-  useEffect(() => {
-    dispatch(getDetailProduct(id));
-  }, []);
-
   return (
     <div className="relative">
       <BuyerModal
+        id={id}
         modalState={isModalOpen}
         closeModal={openCloseModal}
         nama={buyerDetailProduct?.nama}
