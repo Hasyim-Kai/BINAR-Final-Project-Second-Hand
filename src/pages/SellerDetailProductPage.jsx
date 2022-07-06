@@ -3,16 +3,25 @@ import PurpleButton from "../components/PurpleButton";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-export default function SellerDetailProductPage() {
-  const { id } = useParams();
-  //   let { id } = useParams();
+import { getDetailProduct } from "../redux/action/productAction";
+import { useDispatch, useSelector } from "react-redux";
+import ProductImageCarousel from "../components/ProductImageCarousel";
 
-  useEffect(() => {
-    console.log("isi id ", id);
-  }, []);
+
+export default function SellerDetailProductPage() {
+  const dispatch = useDispatch();
+  const { buyerDetailProduct } = useSelector((state) => state.productReducer);
+  // const image = buyerDetailProduct?.img_url;
+
+
+  let { id } = useParams();
+
+  useEffect(() => { dispatch(getDetailProduct(id)); }, []);
   return (
+    <div className="relative">
     <div className="min-h-screen max-w-4xl mx-auto grid  grid-cols-1 lg:grid-cols-3 gap-4 pt-10">
       <section className="lg:col-span-2">
+      <ProductImageCarousel productImages={buyerDetailProduct?.img_url}/>
         <div className="overflow-hidden rounded-xl hover:scale-110 hover:shadow-lg transition-all duration-500">
           <img
             className="object-cover h-[25rem] w-full"
@@ -24,14 +33,15 @@ export default function SellerDetailProductPage() {
           <h1 className="mb-2">
             <b>Deskripsi</b>
           </h1>
+          <p>{buyerDetailProduct?.deskripsi}</p>
           <p>Product Id {id}</p>
         </div>
       </section>
       {console.log(id)}
       <section className="flex flex-col">
         <div className="border rounded-xl p-4 mb-5">
-          <h1 className="text-xl font-semibold">Jam Tangan Casio {id}</h1>
-          <p className="text-gray-500 mt-1">Accesoris</p>
+          <h1 className="text-xl font-semibold">{buyerDetailProduct?.nama}</h1>
+          <p className="text-gray-500 mt-1">{buyerDetailProduct?.category}</p>
           <h1 className="text-xl font-semibold mt-3">
             {ConvertToRupiah(250000)}
           </h1>
@@ -46,6 +56,7 @@ export default function SellerDetailProductPage() {
 
         <IdentityCard namaPenjual="Sugiono" kota="Japan" />
       </section>
+    </div>
     </div>
   );
 }
