@@ -12,7 +12,7 @@ export default function ProductImageCarousel({ productImages = [] }) {
         setCurrentIndex((currentIndex + productsLength - 1) % productsLength);
     }; 
 
-    return <><div id="controls-carousel" className="relative max-w-2xl h-96 mx-auto overflow-hidden rounded-lg hover:scale-110 transition-all duration-500">
+    return <><div id="controls-carousel" className="relative z-0 max-w-2xl h-96 mx-auto overflow-hidden rounded-lg hover:scale-110 transition-all duration-500">
         <div className="overflow-hidden">
             <img className="object-cover h-[25rem] w-full" src={productImages[currentIndex].img_url} alt="cat" />
         </div>

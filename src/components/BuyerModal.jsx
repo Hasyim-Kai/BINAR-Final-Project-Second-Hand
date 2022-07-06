@@ -3,13 +3,7 @@ import IdentityCard from "../components/IdentityCard";
 import PurpleButton from "../components/PurpleButton";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
-export default function BuyerModal({
-  modalState = false,
-  closeModal = () => {},
-  nama,
-  harga,
-  image,
-}) {
+export default function BuyerModal({modalState = false, closeModal = () => {}, nama, harga, image}) {
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   const [data, setData] = useState("");
 
@@ -17,7 +11,7 @@ export default function BuyerModal({
     <div
       className={`${
         modalState ? "block" : "hidden"
-      } absolute top-0 w-full h-full bg-black/80`}
+      } absolute z-50 top-0 w-full h-full bg-black/80`}
     >
       {/* MODAL CARD */}
       <section
