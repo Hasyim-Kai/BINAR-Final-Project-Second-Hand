@@ -5,9 +5,18 @@ export const setLoading = (payload) => {
   };
 };
 
-export const setError = (payload) => {
+export const setError = (payload, message) => {
   return {
     type: "SET_ERROR",
     payload,
+    message,
+  };
+};
+
+export const setSuccess = (payload, message) => {
+  return {
+    type: "SET_SUCCESS",
+    payload,
+    message,
   };
 };
