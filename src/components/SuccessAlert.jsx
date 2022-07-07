@@ -7,13 +7,12 @@ export default function SuccessAlert({ showAlert = false, message }) {
     setTimeout(() => {
       setIsShow(false);
     }, 2000);
-    // clearTimeout(timer);
   }
 
   return isShow ? (
     <div
-      className="absolute left-0 right-0 p-4 mb-4 text-white bg-green-600 shadow-xl rounded-lg w-7/12 mx-auto flex justify-between" role="alert"
-      
+      className="absolute z-10 left-0 right-0 p-4 mb-4 text-white bg-green-600 shadow-xl rounded-lg w-7/12 mx-auto flex justify-between"
+      role="alert"
     >
       <p>
         <b>{message}</b>

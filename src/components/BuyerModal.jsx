@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import IdentityCard from "../components/IdentityCard";
 import PurpleButton from "../components/PurpleButton";
 import { postTransaction } from "../redux/action/transactionAction";
@@ -15,16 +16,19 @@ export default function BuyerModal({
   image = "/images/cat.jpg",
 }) {
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  console.log(data);
   const submit = (e) => {
     e.preventDefault();
-    console.log(e);
+    closeModal();
+    const hargaData = {
+      harga: data,
+    };
+    dispatch(postTransaction(id, hargaData, navigate));
   };
 
-  // useEffect(() => {
-  //   dispatch(postTransaction(id, data));
-  // }, []);
   return (
     <div
       className={`${

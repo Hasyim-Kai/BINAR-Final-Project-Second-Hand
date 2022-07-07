@@ -7,10 +7,14 @@ import IdentityCard from "../components/IdentityCard";
 import PurpleButton from "../components/PurpleButton";
 import { getDetailProduct } from "../redux/action/productAction";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
+import SuccessAlert from "../components/SuccessAlert";
 
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
   const { buyerDetailProduct } = useSelector((state) => state.productReducer);
+  const { isSuccess, messageSuccess } = useSelector(
+    (state) => state.globalReducer
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
@@ -20,10 +24,15 @@ export default function BuyerDetailProductPage() {
   }
   useEffect(() => {
     dispatch(getDetailProduct(id));
+    isSuccess == true && openCloseModal();
   }, []);
 
   return (
     <div className="relative">
+      {isSuccess == true && (
+        <SuccessAlert showAlert={isSuccess} message={messageSuccess} />
+      )}
+
       <BuyerModal
         id={id}
         modalState={isModalOpen}
@@ -56,6 +65,7 @@ export default function BuyerDetailProductPage() {
               {ConvertToRupiah(buyerDetailProduct?.harga)}
             </h1>
             <PurpleButton
+              // disable
               text="Saya Tertarik dan Ingin Nego"
               additionalStyles="text-sm w-full mt-5"
               onClickFunction={openCloseModal}
