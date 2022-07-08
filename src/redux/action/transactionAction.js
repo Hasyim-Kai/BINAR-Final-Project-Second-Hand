@@ -27,3 +27,16 @@ export const interest = () => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
+//Seller sold Product
+
+export const soldProduct = () => (dispatch) => {
+  dispatch(setLoading(true));
+  transactionAPI
+    .transactionByCurrentUser()
+    .then((res) => {
+      dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
+      dispatch(setLoading(false));
+    })
+    .catch((err) => console.log(err));
+};
