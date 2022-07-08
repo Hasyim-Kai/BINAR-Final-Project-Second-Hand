@@ -10,4 +10,10 @@ export default {
       postData,
       config
     ),
+
+  transactionByCurrentUser: () =>
+    axios.get(
+      "https://second-hand-kelompok-5.herokuapp.com/api/transaction/myproduct",
+      config
+    ),
 };
