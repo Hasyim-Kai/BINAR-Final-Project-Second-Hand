@@ -1,6 +1,9 @@
 const initialDataState = {
   interestData: [],
+  soldData: []
 };
+
+
 
 const interestReducer = (state = initialDataState, action) => {
   switch (action.type) {
