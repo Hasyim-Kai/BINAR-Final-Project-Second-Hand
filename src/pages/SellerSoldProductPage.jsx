@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import SuccessOrderModal from "../components/SuccessOrderModal";
-import OrderStatusModal from "../components/OrderStatusModal";
 import IdentityCard from "../components/IdentityCard";
-import SellerOrderItem from "../components/SellerOrderItem";
 import ProductCategoryPanel from "../components/ProductCategoryPanel";
+import ProductItem from "../components/ProductItem";
+import { interest } from "../redux/action/transactionAction";
+import Loading from "../components/Loading";
 
 export default function SellerSoldProductPage() {
     const { dataLogin } = useSelector( state => state.authReducer )
