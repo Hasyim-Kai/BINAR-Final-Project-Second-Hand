@@ -49,7 +49,7 @@ export default function SellerDetailProductPage() {
           </button>
         </div>
 
-        <IdentityCard namaPenjual={buyerDetailProduct?.seller_name} kota={buyerDetailProduct?.seller_kota}/>
+        <IdentityCard/>
       </section>
     </div>
     </div>
