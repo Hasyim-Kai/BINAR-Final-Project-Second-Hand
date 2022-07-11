@@ -22,14 +22,6 @@ export default function ProductCategoryPanel() {
          </div></button>
       </Link>      
 
-      <Link to='/my-wishlist'>
-         <button className="w-full"><div className={`${categoryItemStyle} border-b-2`}>
-            <img src="/icons/fi_heart.svg" alt="heart" />
-            <h1 className="text-lg">Wishlist</h1>
-            <img className="ml-auto" src="/icons/fi_arrow-right.svg" alt="arrow-right" />
-         </div></button>
-      </Link>      
-
       <Link to='/my-sold'>
          <button className="w-full"><div className={categoryItemStyle}>
             <img src="/icons/fi_dollar-sign.svg" alt="dollar-sign" />
