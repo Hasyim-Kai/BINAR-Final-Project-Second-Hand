@@ -28,12 +28,33 @@ export const interest = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
+export const setInterestDetail = (transactinoItem) => (dispatch) => {
+  dispatch({ type: "SET_INTEREST_DETAIL", payload: transactinoItem });
+};
+
 //Seller sold Product
 export const soldProduct = () => (dispatch) => {
   dispatch(setLoading(true));
   transactionAPI.soldProductByCurrentUser().then((res) => {
       dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
       dispatch(setLoading(false));
+    })
+    .catch((err) => console.log(err));
+};
+
+export const acceptOrRefuseTransaction = (id, acceptOrRefuse) => (dispatch) => {
+  transactionAPI.acceptOrRefuseTransaction(id, {opsi : acceptOrRefuse}).then((res) => {
+      // dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
+      console.log(res);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const successOrCancelTransaction = (id, acceptOrRefuse, navigate) => (dispatch) => {
+  transactionAPI.successOrCancelTransaction(id, {opsi : acceptOrRefuse}).then((res) => {
+      // dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
+      console.log(res);
+      navigate("/my-interested");
     })
     .catch((err) => console.log(err));
 };

@@ -1,4 +1,5 @@
 const initialDataState = {
+  interestDetailData: {},
   interestData: [],
   soldData: [],
   sellerNotification: []
@@ -6,6 +7,11 @@ const initialDataState = {
 
 const interestReducer = (state = initialDataState, action) => {
   switch (action.type) {
+    case "SET_INTEREST_DETAIL":
+      return {
+        ...state,
+        interestDetailData: action.payload,
+      };
     case "SET_INTEREST_LIST":
       return {
         ...state,
