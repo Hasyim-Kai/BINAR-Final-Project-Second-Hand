@@ -1,9 +1,8 @@
 const initialDataState = {
   interestData: [],
-  soldData: []
+  soldData: [],
+  sellerNotification: []
 };
-
-
 
 const interestReducer = (state = initialDataState, action) => {
   switch (action.type) {
@@ -12,8 +11,14 @@ const interestReducer = (state = initialDataState, action) => {
         ...state,
         interestData: action.payload,
       };
+    case "SET_SELLER_NOTIF":
+        return {
+          ...state,
+          sellerNotification: action.payload,
+        };
+    default:
+      return state;  
   }
-  return state;
 };
 
 export default interestReducer;

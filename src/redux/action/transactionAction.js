@@ -29,7 +29,6 @@ export const interest = () => (dispatch) => {
 };
 
 //Seller sold Product
-
 export const soldProduct = () => (dispatch) => {
   dispatch(setLoading(true));
   transactionAPI
@@ -39,4 +38,14 @@ export const soldProduct = () => (dispatch) => {
       dispatch(setLoading(false));
     })
     .catch((err) => console.log(err));
+};
+
+export const getSellerNotif = () => (dispatch) => {
+  transactionAPI.getSellerNotification().then((res) => {
+      console.log(res.response);
+      dispatch({ type: "SET_SELLER_NOTIF", payload: res.data.data });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

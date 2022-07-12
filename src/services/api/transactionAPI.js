@@ -17,9 +17,15 @@ export default {
       config
     ),
 
-    soldProductByCurrentUser: () =>
+  soldProductByCurrentUser: () =>
     axios.get(
       "https://second-hand-kelompok-5.herokuapp.com/api/transaction/myproduct/sold",
+      config
+    ),
+
+  getSellerNotification: () =>
+    axios.get(
+      "https://second-hand-kelompok-5.herokuapp.com/api/notification/seller",
       config
     ),
 };
