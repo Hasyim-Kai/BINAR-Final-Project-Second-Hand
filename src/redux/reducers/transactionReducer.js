@@ -11,6 +11,11 @@ const interestReducer = (state = initialDataState, action) => {
         ...state,
         interestData: action.payload,
       };
+    case "SET_SOLD_LIST":
+      return {
+        ...state,
+        soldData: action.payload,
+      };
     case "SET_SELLER_NOTIF":
         return {
           ...state,

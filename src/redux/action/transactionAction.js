@@ -31,9 +31,7 @@ export const interest = () => (dispatch) => {
 //Seller sold Product
 export const soldProduct = () => (dispatch) => {
   dispatch(setLoading(true));
-  transactionAPI
-    .transactionByCurrentUser()
-    .then((res) => {
+  transactionAPI.soldProductByCurrentUser().then((res) => {
       dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
       dispatch(setLoading(false));
     })

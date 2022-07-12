@@ -1,3 +1,4 @@
+import EmptyProductNotification from "../components/EmptyProductNotification";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IdentityCard from "../components/IdentityCard";
@@ -29,7 +30,7 @@ export default function SellerInterestedProductPage() {
       <h1 className="text-2xl mb-7">
         <b>Daftar Wishlist Saya</b>
       </h1>
-      <IdentityCard namaPenjual="Sugiono" kota="Japan" isEditEnabled={true} />
+      <IdentityCard isEditEnabled={true} />
 
       <div className="flex flex-wrap justify-between">
         <ProductCategoryPanel />
@@ -38,7 +39,7 @@ export default function SellerInterestedProductPage() {
         <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto">
           {isLoading == true ? (
             <Loading />
-          ) : (
+          ) : interestData.length < 1 ? <EmptyProductNotification isOnGrid={true} /> : (
             interestData.map((item, index) => (
               <ProductItem
                 key={index}
