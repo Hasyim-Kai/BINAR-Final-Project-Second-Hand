@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import ProductImageCarousel from "../components/ProductImageCarousel";
 import BuyerModal from "../components/BuyerModal";
 import IdentityCard from "../components/IdentityCard";

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
 export default function ProductItem({
@@ -9,12 +9,15 @@ export default function ProductItem({
   price = 0,
   isMine = false,
   interested,
+  token,
 }) {
   return (
     <>
       <Link
         to={
-          interested
+          token == null
+            ? "/login"
+            : interested
             ? "/my-order/" + id
             : isMine
             ? "/my-product/" + id
