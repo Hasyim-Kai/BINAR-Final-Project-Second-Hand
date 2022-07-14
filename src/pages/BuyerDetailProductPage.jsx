@@ -16,6 +16,8 @@ export default function BuyerDetailProductPage() {
     (state) => state.globalReducer
   );
 
+  console.log(buyerDetailProduct);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
 
@@ -72,7 +74,11 @@ export default function BuyerDetailProductPage() {
             />
           </div>
 
-          <IdentityCard />
+          <IdentityCard
+            // img={buyerDetailProduct?}
+            name={buyerDetailProduct?.seller_name}
+            city={buyerDetailProduct?.seller_kota}
+          />
         </section>
       </div>
     </div>
