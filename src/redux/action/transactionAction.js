@@ -17,8 +17,7 @@ export const postTransaction = (id, postData) => (dispatch) => {
 };
 
 // seller interest product
-export const interest = (id) => (dispatch) => {
-  console.log("action id", id);
+export const interest = () => (dispatch) => {
   dispatch(setLoading(true));
   transactionAPI
     .transactionByCurrentUser()
@@ -29,7 +28,7 @@ export const interest = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const setInterestDetail = (transactinoItem) => (dispatch) => {
+export const setInterestDetail = (transactinoItem, id) => (dispatch) => {
   dispatch({ type: "SET_INTEREST_DETAIL", payload: transactinoItem });
 };
 

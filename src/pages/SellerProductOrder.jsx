@@ -4,13 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import SuccessOrderModal from "../components/SuccessOrderModal";
 import OrderStatusModal from "../components/OrderStatusModal";
 import { useDispatch, useSelector } from "react-redux";
-import { interest } from "../redux/action/transactionAction";
+import { interest, setInterestDetail } from "../redux/action/transactionAction";
 // import SellerOrderItem from "../components/SellerOrderItem";
 
 export default function SellerProductOrder() {
   const dispatch = useDispatch();
   // const [isOrderSucceed, setIsOrderSucceed] = useState(false);
-  const { interestDetailData } = useSelector((state) => state.interestReducer);
+  const { interestData } = useSelector((state) => state.interestReducer);
   const [isModalOrderSucceedOpen, setIsModalOrderSucceedOpen] = useState(false);
   const [isOrderAccepted, setIsOrderAccepted] = useState(false);
   const [isModalOrderAcceptedOpen, setIsModalOrderAcceptedOpen] =
@@ -35,7 +35,8 @@ export default function SellerProductOrder() {
   console.log(id);
 
   useEffect(() => {
-    dispatch(interest(id));
+    dispatch(interest);
+    dispatch(setInterestDetail(interestData, id));
   }, []);
 
   return (
