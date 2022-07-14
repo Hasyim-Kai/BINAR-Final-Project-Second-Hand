@@ -5,7 +5,7 @@ export default function ProductItem({
   id = 0,
   name = "null",
   img = "/images/cat.jpg",
-  category = "null",
+  category,
   price = 0,
   isMine = false,
 }) {
