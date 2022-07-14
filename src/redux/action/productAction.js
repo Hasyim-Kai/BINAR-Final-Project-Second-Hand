@@ -32,9 +32,7 @@ export const getSellerProduct = () => (dispatch) => {
 };
 
 export const getDetailProduct = (id) => (dispatch) => {
-  productAPI
-    .getDetailProduct(id)
-    .then((res) => {
+  productAPI.getDetailProduct(id).then((res) => {
       dispatch({
         type: "SET_PRODUCT_DETAIL",
         payload: res?.data?.data,
@@ -48,10 +46,21 @@ export const getDetailProduct = (id) => (dispatch) => {
 export const AddNewProduct = (data, navigate) => (dispatch) => {
   productAPI.add(data).then((res) => {
       console.log(res);
-      navigate("/offer/?isAddProductSuccess=true");
+      navigate("/offer");
     })
     .catch((err) => {
       console.log(err);
       alert("ADD PRODUCT FAIL");
+    });
+};
+
+export const publishProduct = (id, navigate) => (dispatch) => {
+  productAPI.publishProduct(id, {published : true}).then((res) => {
+      console.log(res);
+      navigate("/offer/?isAddProductSuccess=true");
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("PUBLISH PRODUCT FAIL");
     });
 };

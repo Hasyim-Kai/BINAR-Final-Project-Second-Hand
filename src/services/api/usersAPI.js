@@ -20,17 +20,16 @@ export default {
       },
     }),
   updateProfile: (formData, token) => {
-    axios
-      .put(
-        "https://second-hand-kelompok-5.herokuapp.com/api/profile",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    axios.put(
+      "https://second-hand-kelompok-5.herokuapp.com/api/profile",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    // .then((res) => console.log(res))
+    // .catch((err) => console.log(err));
   },
 };

@@ -1,6 +1,6 @@
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
-export default function SellerOrderItem({ paramIsOrderAccepted = false, modalFunction = () => { } }) {
+export default function SellerOrderItem({ paramIsOrderAccepted = false, modalFunction = () => { }, acceptOrRefuseFunction = () => { } }) {
     return <section className="flex flex-col">
 
         <div className="flex gap-5 mb-4">
@@ -17,8 +17,8 @@ export default function SellerOrderItem({ paramIsOrderAccepted = false, modalFun
         </div>
 
         {paramIsOrderAccepted ? <div className="flex flex-wrap gap-5 ml-auto">
-            <button className="border border-primaryPurple rounded-2xl px-14 py-1.5 text-sm font-medium">Status</button>
-            <button className={`text-sm px-6 py-1.5 text-white bg-primaryPurple rounded-2xl flex gap-3 items-center justify-evenly`} onClick={modalFunction}>Hubungi di <img src='/icons/fi_whatsapp.svg' alt="wa" /></button>
+            <button onClick={modalFunction} className="border border-primaryPurple rounded-2xl px-14 py-1.5 text-sm font-medium">Status</button>
+            <button className={`text-sm px-6 py-1.5 text-white bg-primaryPurple rounded-2xl flex gap-3 items-center justify-evenly`}>Hubungi di <img src='/icons/fi_whatsapp.svg' alt="wa" /></button>
         </div> : <div className="flex flex-wrap gap-5 ml-auto">
             <button className="border border-primaryPurple rounded-2xl px-14 py-1.5 text-sm font-medium">Tolak</button>
             <button onClick={modalFunction} className="bg-primaryPurple rounded-2xl px-14 py-1.5 text-sm font-medium text-white">Terima</button>

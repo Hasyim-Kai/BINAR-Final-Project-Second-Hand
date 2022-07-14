@@ -72,10 +72,7 @@ export default function BuyerDetailProductPage() {
             />
           </div>
 
-          <IdentityCard
-            namaPenjual={buyerDetailProduct?.seller_name}
-            kota={buyerDetailProduct?.seller_kota}
-          />
+          <IdentityCard />
         </section>
       </div>
     </div>

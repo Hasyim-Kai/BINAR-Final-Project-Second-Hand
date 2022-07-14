@@ -2,7 +2,7 @@ const initialState = {
   dataLogin: null,
   dataRegister: null,
   dataGetProfile: null,
-  dataUpdateProfile: null,
+  // dataUpdateProfile: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -23,11 +23,12 @@ const authReducer = (state = initialState, action) => {
         ...state,
         dataGetProfile: action.payload,
       };
-    case "SET_DATA_UPDATE_PROFILE":
-      return {
-        ...state,
-        dataUpdateProfile: action.payload,
-      };
+
+    // case "SET_DATA_UPDATE_PROFILE":
+    //   return {
+    //     ...state,
+    //     dataUpdateProfile: action.payload,
+    //   };
     default:
       return state;
   }
