@@ -14,7 +14,7 @@ export default function UserNavbar() {
   const token = localStorage.getItem("user:token");
   const { dataGetProfile } = useSelector((state) => state.authReducer);
 
-  console.log(dataGetProfile);
+  // console.log(dataGetProfile);
   const logout = () => {
     localStorage.clear();
     navigate("/");
