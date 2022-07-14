@@ -40,4 +40,10 @@ export default {
       "https://second-hand-kelompok-5.herokuapp.com/api/notification/seller",
       config
     ),
+
+  getBuyerNotification: () =>
+    axios.get(
+      "https://second-hand-kelompok-5.herokuapp.com/api/notification/buyer",
+      config
+    ),
 };

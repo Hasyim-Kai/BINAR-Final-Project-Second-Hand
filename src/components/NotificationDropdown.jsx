@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "../components/NotificationItem";
-import { getSellerNotif } from "../redux/action/transactionAction";
+import { useDispatch, useSelector } from "react-redux";
+import { getSellerNotif, getBuyerNotif } from "../redux/action/transactionAction";
 import { useState, useEffect, useRef } from 'react';
 
 const NotificationDropdown = () => {
   const dispatch = useDispatch();
-  const { sellerNotification } = useSelector((state) => state.interestReducer);
+  const { sellerNotification, buyerNotification } = useSelector((state) => state.interestReducer);
   const wrapperRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  function handleSetDropdownOpen(event) { setDropdownOpen(!isDropdownOpen); };
-  useEffect(() => { dispatch(getSellerNotif());  }, []);
+  function handleSetDropdownOpen(event) { 
+    setDropdownOpen(!isDropdownOpen);
+    dispatch(getSellerNotif());
+    dispatch(getBuyerNotif());
+  };
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -34,7 +38,16 @@ const NotificationDropdown = () => {
         {/* <!-- dropdown menu --> */}
         <div className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl ${isDropdownOpen ? 'flex flex-col' : 'hidden'} z-50`}>
             <ul className="lg:w-96 w-72">
-                {sellerNotification && sellerNotification.map( item => <NotificationItem productName = {item.product.nama} 
+                {/* IF NO NOTIF, SHOW EMPTY */}
+                {sellerNotification.length < 1 && buyerNotification.length < 1 && <h1 className="text-center">Currently Empty</h1>}
+                
+                {/* SELLER NOTIFICATION */}
+                {sellerNotification.length < 1 && sellerNotification.map( item => <NotificationItem productName = {item.product.nama}
+                productPrice = {item.product.harga} productBargainedPrice = {item.harga_tawar} dateBargained = {item.createdAt}
+                productImg={item.product.pictures[0].img_url} isBargained={true} key={item.id}/>)}
+
+                {/* BUYER NOTIFICATION */}
+                {buyerNotification.length < 1 && buyerNotification.map( item => <NotificationItem productName = {item.product.nama}
                 productPrice = {item.product.harga} productBargainedPrice = {item.harga_tawar} dateBargained = {item.createdAt}
                 productImg={item.product.pictures[0].img_url} isBargained={true} key={item.id}/>)}
             </ul>

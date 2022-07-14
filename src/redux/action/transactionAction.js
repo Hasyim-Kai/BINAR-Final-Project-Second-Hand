@@ -68,3 +68,13 @@ export const getSellerNotif = () => (dispatch) => {
       console.log(err);
     });
 };
+
+export const getBuyerNotif = () => (dispatch) => {
+  transactionAPI.getBuyerNotification().then((res) => {
+      console.log(res.response);
+      dispatch({ type: "SET_BUYER_NOTIF", payload: res.data.data });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

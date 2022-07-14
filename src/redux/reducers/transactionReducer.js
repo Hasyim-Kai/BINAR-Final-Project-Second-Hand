@@ -2,7 +2,8 @@ const initialDataState = {
   interestDetailData: {},
   interestData: [],
   soldData: [],
-  sellerNotification: []
+  sellerNotification: [],
+  buyerNotification: [],
 };
 
 const interestReducer = (state = initialDataState, action) => {
@@ -23,6 +24,11 @@ const interestReducer = (state = initialDataState, action) => {
         soldData: action.payload,
       };
     case "SET_SELLER_NOTIF":
+        return {
+          ...state,
+          sellerNotification: action.payload,
+        };
+    case "SET_BUYER_NOTIF":
         return {
           ...state,
           sellerNotification: action.payload,
