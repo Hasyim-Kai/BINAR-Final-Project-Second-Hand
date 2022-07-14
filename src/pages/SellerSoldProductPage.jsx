@@ -25,13 +25,12 @@ export default function SellerSoldProductPage() {
       }, []);
 
     return <div className="min-h-screen max-w-5xl mx-auto pt-10">
-        <h1 className="text-2xl mb-7"><b>Daftar Terjual Saya</b></h1>
+        <h1 className="text-2xl mb-6"><b>Daftar Terjual Saya</b></h1>
         <IdentityCard isEditEnabled={true} />
 
         <div className="flex flex-wrap justify-between">
             <ProductCategoryPanel />
 
-            {/* <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto"> */}
             <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto">
             {isLoading == true ? (
               <Loading />
