@@ -1,5 +1,7 @@
 import usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
+import { setLoading } from "./globalAction";
+
 const token = localStorage.getItem("user:token");
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
@@ -48,14 +50,16 @@ export const RegisterAction = (data, navigate, callback) => (dispatch) => {
 };
 
 export const GetProfile = (token) => (dispatch) => {
+  dispatch(setLoading(true));
   usersAPI
     .getProfile(token)
     .then((res) => {
-      // console.log("isi get profile ", res?.data?.data);
+      console.log("isi get profile ", res?.data?.data);
       dispatch({
         type: "SET_DATA_GET_PROFILE",
         payload: res?.data?.data,
       });
+      dispatch(setLoading(false));
     })
     .catch((err) => {
       console.log(err);
@@ -63,17 +67,31 @@ export const GetProfile = (token) => (dispatch) => {
 };
 
 export const UpdateProfile =
-  ({ form, selectedFile }) =>
+  ({ form, selectedFile, navigate }) =>
   (dispatch) => {
     console.log("isi action ", form);
-    var formdata = new FormData();
-    formdata.append("name", form.name);
-    formdata.append("phone_number", form.phone_number);
-    formdata.append("address", form.address);
+    const formdata = new FormData();
+    // formdata.append("name", form.name);
+    // formdata.append("phone_number", form.phone_number);
+    // formdata.append("address", form.address);
+    // formdata.append("profile_pict", selectedFile);
+    // formdata.append("city_id", form.city_id);
+    formdata.append("name", "Diananaaa");
+    formdata.append("phone_number", "7345748");
+    formdata.append("address", "hahaha aa");
     formdata.append("profile_pict", selectedFile);
-    formdata.append("city_id", form.city_id);
+    formdata.append("city_id", "8");
 
-    usersAPI.updateProfile(formdata, token);
-    // .then((res) => console.log(res))
-    // .catch((err) => console.log(err));
+    console.log(formdata.getAll);
+    usersAPI
+      .updateProfile(formdata, token)
+      .then((res) => {
+        console.log(res.data.data);
+        dispatch({
+          type: "SET_DATA_GET_PROFILE",
+          payload: res?.data?.data,
+        });
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
