@@ -53,6 +53,7 @@ export default function SellerInterestedProductPage() {
                 price={item?.product?.harga}
                 img={item?.product.pictures[0].img_url}
                 isMine={true}
+                interested
               />
             ))
           )}

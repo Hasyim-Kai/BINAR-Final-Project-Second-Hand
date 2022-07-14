@@ -28,8 +28,11 @@ export default function AppRoutes() {
           <Route path="new-product" element={<NewProductPage />} />
           <Route path="product/:id" element={<BuyerDetailProductPage />} />
           <Route path="my-product/:id" element={<SellerDetailProductPage />} />
-          <Route path="my-order" element={<SellerProductOrder />} />
-          <Route path="my-interested" element={<SellerInterestedProductPage />}/>
+          <Route path="my-order/:id" element={<SellerProductOrder />} />
+          <Route
+            path="my-interested"
+            element={<SellerInterestedProductPage />}
+          />
           <Route path="my-sold" element={<SellerSoldProductPage />} />
           <Route path="offer" element={<SellerProductPage />} />
           <Route path="profile" element={<ProfilePage />} />
