@@ -12,6 +12,7 @@ export default function SellerDetailProductPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { buyerDetailProduct } = useSelector((state) => state.productReducer);
+  const { dataGetProfile } = useSelector((state) => state.authReducer);
 
   let { id } = useParams();
   useEffect(() => { dispatch(getDetailProduct(id)); }, []);
@@ -49,7 +50,7 @@ export default function SellerDetailProductPage() {
           </button>
         </div>
 
-        <IdentityCard/>
+        <IdentityCard name={dataGetProfile.name} city={dataGetProfile.kota} img={dataGetProfile.img_url}/>
       </section>
     </div>
     </div>
