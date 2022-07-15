@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IdentityCard from "../components/IdentityCard";
 import ProductCategoryPanel from "../components/ProductCategoryPanel";
@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import EmptyProductNotification from "../components/EmptyProductNotification";
 
 export default function SellerSoldProductPage() {
+  const [token, setToken] = useState('')
   const { soldData } = useSelector((state) => state.interestReducer);
   const { isLoading } = useSelector((state) => state.globalReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
@@ -33,6 +34,7 @@ export default function SellerSoldProductPage() {
       <IdentityCard
         name={dataGetProfile?.name}
         city={dataGetProfile?.kota}
+        img={dataGetProfile.img_url}
         isEditEnabled={true}
       />
 
@@ -40,7 +42,7 @@ export default function SellerSoldProductPage() {
         <ProductCategoryPanel />
 
         {/* <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto"> */}
-        <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto">
+        <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto w-full">
           {isLoading == true ? (
             <Loading />
           ) : soldData.length < 1 ? (
@@ -55,6 +57,7 @@ export default function SellerSoldProductPage() {
                 price={item?.product?.harga}
                 img={item?.product.pictures[0].img_url}
                 isMine={true}
+                token={token}
               />
             ))
           )}

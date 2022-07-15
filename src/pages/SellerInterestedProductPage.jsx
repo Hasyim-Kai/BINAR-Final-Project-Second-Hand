@@ -1,13 +1,14 @@
 import EmptyProductNotification from "../components/EmptyProductNotification";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import IdentityCard from "../components/IdentityCard";
 import ProductCategoryPanel from "../components/ProductCategoryPanel";
 import ProductItem from "../components/ProductItem";
-import { interest } from "../redux/action/transactionAction";
+import { interest, setInterestDetail } from "../redux/action/transactionAction";
 import Loading from "../components/Loading";
 
 export default function SellerInterestedProductPage() {
+  const [token, setToken] = useState('')
   const { interestData } = useSelector((state) => state.interestReducer);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
@@ -23,8 +24,13 @@ export default function SellerInterestedProductPage() {
   ];
 
   useEffect(() => {
+    setToken(localStorage.getItem("user:token"))
     dispatch(interest());
   }, []);
+
+  function moveToMyOrder(theItem, theId){
+    dispatch(setInterestDetail(theItem, theId))
+  }
 
   return (
     <div className="min-h-screen max-w-5xl mx-auto pt-10">
@@ -34,12 +40,13 @@ export default function SellerInterestedProductPage() {
       <IdentityCard
         name={dataGetProfile?.name}
         city={dataGetProfile?.kota}
+        img={dataGetProfile.img_url}
         isEditEnabled={true}
       />
 
       <div className="flex flex-wrap justify-between">
         <ProductCategoryPanel />
-        <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto">
+        <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto w-full">
           {isLoading == true ? (
             <Loading />
           ) : interestData.length < 1 ? (
@@ -54,6 +61,9 @@ export default function SellerInterestedProductPage() {
                 img={item?.product.pictures[0].img_url}
                 isMine={true}
                 interested
+                token={token}
+                onCickFunction={moveToMyOrder}
+                thisItem={item}
               />
             ))
           )}

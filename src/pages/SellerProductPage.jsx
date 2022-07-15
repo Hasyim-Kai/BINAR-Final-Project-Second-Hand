@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import IdentityCard from "../components/IdentityCard";
 import SuccessAlert from "../components/SuccessAlert";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSellerProduct } from "../redux/action/productAction";
 
 export default function SellerProductPage() {
+  const [token, setToken] = useState('')
   const dispatch = useDispatch();
   const { sellerProductList } = useSelector((state) => state.productReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
@@ -40,6 +41,7 @@ export default function SellerProductPage() {
       <IdentityCard
         name={dataGetProfile?.name}
         city={dataGetProfile?.kota}
+        img={dataGetProfile.img_url}
         isEditEnabled={true}
       />
 
@@ -70,6 +72,7 @@ export default function SellerProductPage() {
               price={item.harga}
               img={item.img_url}
               isMine={true}
+              token={token}
             />
           ))}
         </section>

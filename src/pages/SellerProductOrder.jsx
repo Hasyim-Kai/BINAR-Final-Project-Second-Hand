@@ -1,16 +1,17 @@
+import { DateFormat } from "../utility/DateFormat";
 import { useState, useEffect } from "react";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 import { Link, useParams } from "react-router-dom";
 import SuccessOrderModal from "../components/SuccessOrderModal";
 import OrderStatusModal from "../components/OrderStatusModal";
 import { useDispatch, useSelector } from "react-redux";
-import { interest, setInterestDetail } from "../redux/action/transactionAction";
+import { acceptOrRefuseTransaction } from "../redux/action/transactionAction";
 // import SellerOrderItem from "../components/SellerOrderItem";
 
 export default function SellerProductOrder() {
   const dispatch = useDispatch();
   // const [isOrderSucceed, setIsOrderSucceed] = useState(false);
-  const { interestData } = useSelector((state) => state.interestReducer);
+  const { interestDetailData } = useSelector((state) => state.interestReducer);
   const [isModalOrderSucceedOpen, setIsModalOrderSucceedOpen] = useState(false);
   const [isOrderAccepted, setIsOrderAccepted] = useState(false);
   const [isModalOrderAcceptedOpen, setIsModalOrderAcceptedOpen] =
@@ -26,17 +27,21 @@ export default function SellerProductOrder() {
   function acceptTransaction() {
     setIsOrderAccepted(true);
     openCloseOrderAcceptedModal();
+    dispatch(acceptOrRefuseTransaction(interestDetailData.id, true))
   }
+
   function refuseTransaction() {
     console.log(`Tolak Transaksi`);
+    dispatch(acceptOrRefuseTransaction(interestDetailData.id, false))
   }
 
   let { id } = useParams();
   console.log(id);
 
   useEffect(() => {
-    dispatch(interest);
-    dispatch(setInterestDetail(interestData, id));
+    console.log(interestDetailData)
+    // dispatch(interest);
+    // dispatch(setInterestDetail(interestData, id));
   }, []);
 
   return (
@@ -67,22 +72,17 @@ export default function SellerProductOrder() {
           <div className="overflow-hidden rounded-xl">
             <img
               className="object-cover h-14 w-14"
-              src={`/images/cat.jpg`}
-              alt="cat"
+              src={interestDetailData.penawar.profile?.img_url === null ? 
+                '/images/default_profile_photo.png' 
+                : interestDetailData.penawar.profile?.img_url}             
+              alt="Profile"
             />
           </div>
 
           <div>
-            <h1 className="font-semibold mb-1">Anonym</h1>
-            <p className="text-gray-500 text-xs">City</p>
+            <h1 className="font-semibold mb-1">{interestDetailData.penawar.profile.name}</h1>
+            <p className="text-gray-500 text-xs">{interestDetailData.penawar.profile.kotum.nama_kota}</p>
           </div>
-
-          <Link
-            className="ml-auto border border-primaryPurple rounded-lg px-3"
-            to="/profile"
-          >
-            Edit
-          </Link>
         </div>
 
         <h1 className="mb-7 font-medium">Daftar Produkmu yang Ditawar</h1>
@@ -93,17 +93,17 @@ export default function SellerProductOrder() {
             <div className="overflow-hidden w-12 h-12 rounded-xl">
               <img
                 className={`object-cover w-full h-full`}
-                src="/images/cat.jpg"
-                alt="cat"
+                src={interestDetailData.product.pictures[0].img_url}
+                alt="ProductImage"
               />
             </div>
             <div>
               <p className="text-sm text-gray-500">Penawaran Produk</p>
-              <h1 className="">Jam Tangan Casio</h1>
-              <h1 className="">{ConvertToRupiah(250000)}</h1>
-              <h1 className="">Ditawar {ConvertToRupiah(200000)}</h1>
+              <h1 className="">{interestDetailData.product.nama}</h1>
+              <h1 className="">{ConvertToRupiah(interestDetailData.product.harga)}</h1>
+              <h1 className="">Ditawar {ConvertToRupiah(interestDetailData.harga_tawar)}</h1>
             </div>
-            <p className="text-sm text-gray-500 ml-auto">Tanggal </p>
+            <p className="text-sm text-gray-500 ml-auto">{DateFormat(interestDetailData.createdAt)}</p>
           </div>
 
           {isOrderAccepted ? (
@@ -122,7 +122,7 @@ export default function SellerProductOrder() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-5 ml-auto">
-              <Link to="/my-interested">
+              <Link to="/offer">
                 <button
                   onClick={refuseTransaction}
                   className="border border-primaryPurple rounded-2xl px-14 py-1.5 text-sm font-medium"
