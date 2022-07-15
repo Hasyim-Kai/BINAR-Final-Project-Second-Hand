@@ -3,6 +3,7 @@ const initialState = {
   sellerProductList: [],
   dataAddProduct: [],
   buyerDetailProduct: [],
+  sellerProductPreview: [],
 };
 
 const productReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const productReducer = (state = initialState, action) => {
         ...state,
         sellerProductList: action.payload,
       };
+      case "SET_MY_PRODUCT_PREVIEW":
+        return {
+          ...state,
+          sellerProductPreview: action.payload,
+        };
     case "SET_ADD_PRODUCT":
       return {
         ...state,
