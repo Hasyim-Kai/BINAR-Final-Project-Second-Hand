@@ -164,10 +164,13 @@ export default function NewProductPage() {
               </div>
             ))}
         </div>
-
-        <button className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-full`}>
+        <button className={`h-10 mt-2 py-2 px-3 rounded-xl w-1/2 border border-primaryPurple `}>
+          Preview
+        </button>
+        <button className={`h-10 py-2 px-1 text-white bg-primaryPurple rounded-xl w-1/2`}>
           Simpan
         </button>
+
       </form>
     </div>
   );
