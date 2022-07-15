@@ -8,6 +8,7 @@ import { getAllProduct } from "../redux/action/productAction";
 import Loading from "../components/Loading";
 
 export default function HomepageProductList() {
+  const token = localStorage.getItem("user:token");
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productReducer.productList);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
@@ -80,6 +81,7 @@ export default function HomepageProductList() {
                   category={filterBtn[item.kategori_id]}
                   price={item.harga}
                   img={item.img_url}
+                  token={token}
                 />
               ))
             )}
