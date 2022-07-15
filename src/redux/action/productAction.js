@@ -70,3 +70,18 @@ export const publishProduct = (id, navigate) => (dispatch) => {
       alert("PUBLISH PRODUCT FAIL");
     });
 };
+
+export const previewProduct = (id, navigate) => (dispatch) => {
+  productAPI
+    .previewProduct(id, { published: true })
+    .then((res) => {
+      console.log(res);
+      navigate("/offer/?isAddProductSuccess=true");
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("PUBLISH PRODUCT FAIL");
+    });
+};
+
+
