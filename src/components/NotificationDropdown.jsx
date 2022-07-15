@@ -1,16 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "../components/NotificationItem";
-import {
-  getSellerNotif,
-  getBuyerNotif,
-} from "../redux/action/transactionAction";
+import { getSellerNotif, getBuyerNotif } from "../redux/action/transactionAction";
 import { useState, useEffect, useRef } from "react";
 
 const NotificationDropdown = () => {
   const dispatch = useDispatch();
-  const { sellerNotification, buyerNotification } = useSelector(
-    (state) => state.interestReducer
-  );
+  const { sellerNotification, buyerNotification } = useSelector( (state) => state.interestReducer );
   const wrapperRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   function handleSetDropdownOpen(event) {
@@ -51,13 +46,13 @@ const NotificationDropdown = () => {
       >
         <ul className="lg:w-96 w-72">
           {/* IF NO NOTIF, SHOW EMPTY */}
-          {sellerNotification.length < 1 && buyerNotification.length < 1 && (
+          {/* {sellerNotification.length < 1 && buyerNotification.length < 1 && (
             <h1 className="text-center">Currently Empty</h1>
-          )}
+          )} */}
 
           {/* SELLER NOTIFICATION */}
-          {sellerNotification.length < 1 &&
-            sellerNotification.map((item) => (
+          {sellerNotification.length > 0 &&
+            sellerNotification.concat(buyerNotification).map((item) => (
               <NotificationItem
                 productName={item.product.nama}
                 productPrice={item.product.harga}
@@ -70,7 +65,7 @@ const NotificationDropdown = () => {
             ))}
 
           {/* BUYER NOTIFICATION */}
-          {buyerNotification.length < 1 &&
+          {/* {buyerNotification.length > 0 &&
             buyerNotification.map((item) => (
               <NotificationItem
                 productName={item.product.nama}
@@ -81,7 +76,7 @@ const NotificationDropdown = () => {
                 isBargained={true}
                 key={item.id}
               />
-            ))}
+            ))} */}
         </ul>
       </div>
     </div>

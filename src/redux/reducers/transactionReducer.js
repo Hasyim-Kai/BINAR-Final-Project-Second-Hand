@@ -31,7 +31,7 @@ const interestReducer = (state = initialDataState, action) => {
     case "SET_BUYER_NOTIF":
         return {
           ...state,
-          sellerNotification: action.payload,
+          buyerNotification: action.payload,
         };
     default:
       return state;  
