@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import ProductImageCarousel from "../components/ProductImageCarousel";
 import BuyerModal from "../components/BuyerModal";
 import IdentityCard from "../components/IdentityCard";
@@ -15,6 +15,8 @@ export default function BuyerDetailProductPage() {
   const { isSuccess, messageSuccess } = useSelector(
     (state) => state.globalReducer
   );
+
+  console.log(buyerDetailProduct);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
@@ -73,8 +75,9 @@ export default function BuyerDetailProductPage() {
           </div>
 
           <IdentityCard
-            namaPenjual={buyerDetailProduct?.seller_name}
-            kota={buyerDetailProduct?.seller_kota}
+            // img={buyerDetailProduct?}
+            name={buyerDetailProduct?.seller_name}
+            city={buyerDetailProduct?.seller_kota}
           />
         </section>
       </div>

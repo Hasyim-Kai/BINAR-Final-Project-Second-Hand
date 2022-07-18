@@ -52,10 +52,10 @@ export default function BuyerModal({
           segera dihubungi penjual.
         </p>
         <IdentityCard
-          namaPenjual={nama}
-          kota={ConvertToRupiah(harga)}
+          name={nama}
+          city={ConvertToRupiah(harga)}
           additionalStyle="bg-gray-200"
-          image={image[0].img_url}
+          img={image[0].img_url}
         />
 
         <form onSubmit={submit}>

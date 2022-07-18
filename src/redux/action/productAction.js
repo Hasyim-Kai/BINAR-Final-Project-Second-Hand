@@ -46,12 +46,42 @@ export const getDetailProduct = (id) => (dispatch) => {
 };
 
 export const AddNewProduct = (data, navigate) => (dispatch) => {
-  productAPI.add(data).then((res) => {
+  productAPI
+    .add(data)
+    .then((res) => {
       console.log(res);
-      navigate("/offer/?isAddProductSuccess=true");
+      navigate("/offer");
     })
     .catch((err) => {
       console.log(err);
       alert("ADD PRODUCT FAIL");
     });
 };
+
+export const publishProduct = (id, navigate) => (dispatch) => {
+  productAPI
+    .publishProduct(id, { published: true })
+    .then((res) => {
+      console.log(res);
+      navigate("/offer/?isAddProductSuccess=true");
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("PUBLISH PRODUCT FAIL");
+    });
+};
+
+export const previewProduct = (id, navigate) => (dispatch) => {
+  productAPI
+    .previewProduct(id, { published: true })
+    .then((res) => {
+      console.log(res);
+      navigate("/offer/?isAddProductSuccess=true");
+    })
+    .catch((err) => {
+      console.log(err);
+      alert("PUBLISH PRODUCT FAIL");
+    });
+};
+
+
