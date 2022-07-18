@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +18,6 @@ export default function BuyerModal({
   const [data, setData] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(data);
   const submit = (e) => {
     e.preventDefault();
     closeModal();

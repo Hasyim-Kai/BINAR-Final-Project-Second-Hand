@@ -2,13 +2,14 @@ import { useState } from "react";
 
 export default function FailAlert({ showAlert = false, message }) {
   const [isShow, setIsShow] = useState(showAlert);
-
-  if (showAlert == true) {
-    setTimeout(() => {
-      setIsShow(false);
-    }, 1000);
-    // clearTimeout(timer);
-  }
+  // const timer = (async) => {
+  //   setTimeout(() => {
+  //     setIsShow(false);
+  //     console.log("satu ");
+  //   }, 1000);
+  //   clearTimeout(timer);
+  //   console.log("dua");
+  // };
 
   return isShow ? (
     <div

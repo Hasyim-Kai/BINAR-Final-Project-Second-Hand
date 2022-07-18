@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const token = localStorage.getItem("user:token");
-let config = { headers: { Authorization: "Bearer " + token } };
-console.log("api", token);
+const config = { headers: { Authorization: "Bearer " + token } };
 
 export default {
   getAll: () =>
@@ -23,7 +22,7 @@ export default {
       postData,
       config
     ),
-    preview: () =>
+  preview: () =>
     axios.post(
       "https://second-hand-kelompok-5.herokuapp.com/api/product/publish/id/${id}",
       config
@@ -31,6 +30,7 @@ export default {
   publishProduct: (id, isPublish) =>
     axios.put(
       `https://second-hand-kelompok-5.herokuapp.com/api/product/publish/id/${id}`,
-      isPublish, config
+      isPublish,
+      config
     ),
 };

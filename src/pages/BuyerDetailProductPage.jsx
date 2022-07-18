@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
-import ProductImageCarousel from "../components/ProductImageCarousel";
+import { useParams } from "react-router-dom";
 import BuyerModal from "../components/BuyerModal";
 import IdentityCard from "../components/IdentityCard";
+import ProductImageCarousel from "../components/ProductImageCarousel";
 import PurpleButton from "../components/PurpleButton";
+import SuccessAlert from "../components/SuccessAlert";
 import { getDetailProduct } from "../redux/action/productAction";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
-import SuccessAlert from "../components/SuccessAlert";
 
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
@@ -15,8 +15,6 @@ export default function BuyerDetailProductPage() {
   const { isSuccess, messageSuccess } = useSelector(
     (state) => state.globalReducer
   );
-
-  console.log(buyerDetailProduct);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
@@ -75,7 +73,7 @@ export default function BuyerDetailProductPage() {
           </div>
 
           <IdentityCard
-            // img={buyerDetailProduct?}
+            img={buyerDetailProduct?.seller_img_url}
             name={buyerDetailProduct?.seller_name}
             city={buyerDetailProduct?.seller_kota}
           />

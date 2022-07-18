@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import EmptyProductNotification from "../components/EmptyProductNotification";
 import IdentityCard from "../components/IdentityCard";
+import Loading from "../components/Loading";
 import ProductCategoryPanel from "../components/ProductCategoryPanel";
 import ProductItem from "../components/ProductItem";
 import { soldProduct } from "../redux/action/transactionAction";
-import Loading from "../components/Loading";
-import EmptyProductNotification from "../components/EmptyProductNotification";
 
 export default function SellerSoldProductPage() {
-  const [token, setToken] = useState('')
+  const [token] = useState("");
   const { soldData } = useSelector((state) => state.interestReducer);
   const { isLoading } = useSelector((state) => state.globalReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
@@ -40,10 +40,8 @@ export default function SellerSoldProductPage() {
 
       <div className="flex flex-wrap justify-between">
         <ProductCategoryPanel />
-
-        {/* <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mx-auto"> */}
         <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto w-full">
-          {isLoading == true ? (
+          {isLoading === true ? (
             <Loading />
           ) : soldData.length < 1 ? (
             <EmptyProductNotification isOnGrid={true} />
@@ -61,9 +59,6 @@ export default function SellerSoldProductPage() {
               />
             ))
           )}
-          {/* {sellerProductList.map((item, index) => 
-                    <ProductItem key={index} id={item.id} name={item.nama} category={productCategory[item.kategori_id]}
-                    price={item.harga} img={item.img_url} isMine={true}/>)} */}
         </section>
       </div>
     </div>

@@ -54,7 +54,6 @@ export const GetProfile = (token) => (dispatch) => {
   usersAPI
     .getProfile(token)
     .then((res) => {
-      console.log("isi get profile ", res?.data?.data);
       dispatch({
         type: "SET_DATA_GET_PROFILE",
         payload: res?.data?.data,
