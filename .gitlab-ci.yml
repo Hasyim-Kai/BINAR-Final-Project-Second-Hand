@@ -1,0 +1,41 @@
+stages:
+  - build
+  - test 
+  - deploy
+
+cache:
+  paths: 
+    - node_modules/
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
+
+build job:
+  image: node:lts
+  stage: build
+  script:
+  - yarn install
+  - yarn build
+  artifacts:
+    paths:
+      - build/
+
+test job:
+  image: node:lts
+  stage: test
+  script: 
+  - yarn install
+  - yarn test
+
+deploy staging:
+  image: ruby:latest
+  stage: deploy
+  only: 
+    - staging
+  script:
+    - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
+  environment:
+    name: staging
+    url: https://challenge-8-diananaa.herokuapp.com/
