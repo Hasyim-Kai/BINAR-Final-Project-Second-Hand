@@ -1,4 +1,4 @@
-import usersAPI from "../../services/api/usersAPI";
+import * as usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 import { setLoading } from "./globalAction";
 
@@ -70,16 +70,11 @@ export const UpdateProfile =
   (dispatch) => {
     console.log("isi action ", form);
     const formdata = new FormData();
-    // formdata.append("name", form.name);
-    // formdata.append("phone_number", form.phone_number);
-    // formdata.append("address", form.address);
-    // formdata.append("profile_pict", selectedFile);
-    // formdata.append("city_id", form.city_id);
-    formdata.append("name", "Diananaaa");
-    formdata.append("phone_number", "7345748");
-    formdata.append("address", "hahaha aa");
+    formdata.append("name", form.name);
+    formdata.append("phone_number", form.phone_number);
+    formdata.append("address", form.address);
     formdata.append("profile_pict", selectedFile);
-    formdata.append("city_id", "8");
+    formdata.append("city_id", form.city_id);
 
     console.log(formdata.getAll);
     usersAPI

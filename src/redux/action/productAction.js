@@ -1,4 +1,4 @@
-import productAPI from "../../services/api/productAPI";
+import * as productAPI from "../../services/api/productAPI";
 import { setLoading } from "./globalAction";
 
 export const getAllProduct = () => (dispatch) => {
@@ -83,5 +83,3 @@ export const previewProduct = (id, navigate) => (dispatch) => {
       alert("PUBLISH PRODUCT FAIL");
     });
 };
-
-

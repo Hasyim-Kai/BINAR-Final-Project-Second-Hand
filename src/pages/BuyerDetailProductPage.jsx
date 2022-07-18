@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -19,17 +20,17 @@ export default function BuyerDetailProductPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
 
-  function openCloseModal() {
-    setIsModalOpen(!isModalOpen);
-  }
+  const openCloseModal = useCallback(() => {
+    setIsModalOpen((isModalOpen) => !isModalOpen);
+  }, []);
   useEffect(() => {
     dispatch(getDetailProduct(id));
-    isSuccess == true && openCloseModal();
-  }, []);
+    isSuccess === true && openCloseModal();
+  }, [dispatch, id, isSuccess, openCloseModal]);
 
   return (
     <div className="relative">
-      {isSuccess == true && (
+      {isSuccess === true && (
         <SuccessAlert showAlert={isSuccess} message={messageSuccess} />
       )}
 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import EmptyProductNotification from "../components/EmptyProductNotification";
+import Loading from "../components/Loading";
+import ProductItem from "../components/ProductItem";
 import SearchButton from "../components/SearchButton";
 import SecondarySearchButton from "../components/SecondarySearchButton";
-import ProductItem from "../components/ProductItem";
-import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../redux/action/productAction";
-import Loading from "../components/Loading";
 
 export default function HomepageProductList() {
   const token = localStorage.getItem("user:token");
@@ -20,28 +20,37 @@ export default function HomepageProductList() {
     "Elektronik",
     "Kesehatan",
   ];
+
   const [category, setCategory] = useState("Semua");
   const [filteredDataDummy, setFilteredDataDummy] = useState([]);
 
   function onCategoryChange(categoryName) {
     setCategory(categoryName);
   }
-  useEffect(() => {
-    dispatch(getAllProduct());
-  }, []);
 
   useEffect(() => {
+    dispatch(getAllProduct());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const filterBtn = [
+      "Semua",
+      "Hobi",
+      "Kendaraan",
+      "Baju",
+      "Elektronik",
+      "Kesehatan",
+    ];
     category === "Semua"
       ? setFilteredDataDummy(productList)
       : setFilteredDataDummy(
           productList.filter((item) => filterBtn[item.kategori_id] === category)
         );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, productList]);
 
   return (
     <>
-      {isLoading == true ? (
+      {isLoading === true ? (
         <Loading />
       ) : (
         <>

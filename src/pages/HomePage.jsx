@@ -18,7 +18,7 @@ export default function HomePage() {
         payload: JwtDecode(token),
       });
     }
-  }, []);
+  }, [dispatch, dataLogin]);
 
   return (
     <div className="min-h-screen">

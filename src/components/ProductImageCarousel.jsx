@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ProductImageCarousel({ productImages = [] }) {
   const [currentIndex, setCurrentIndex] = useState(0);

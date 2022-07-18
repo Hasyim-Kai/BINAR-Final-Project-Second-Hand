@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function SuccessAlert({ showAlert = false, message }) {
   const [isShow, setIsShow] = useState(showAlert);
 
-  if (showAlert == true) {
+  if (showAlert === true) {
     setTimeout(() => {
       setIsShow(false);
     }, 2000);
