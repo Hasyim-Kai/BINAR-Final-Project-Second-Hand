@@ -38,4 +38,4 @@ deploy staging:
     - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
   environment:
     name: staging
-    url: https://challenge-8-diananaa.herokuapp.com/
+    url: https://staging-second-hand-kelompok-5.herokuapp.com/
