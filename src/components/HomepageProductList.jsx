@@ -36,6 +36,7 @@ export default function HomepageProductList() {
       : setFilteredDataDummy(
           productList.filter((item) => filterBtn[item.kategori_id] === category)
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, productList]);
 
   return (
