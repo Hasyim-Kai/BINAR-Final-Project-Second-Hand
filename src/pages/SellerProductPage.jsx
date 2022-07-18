@@ -24,7 +24,7 @@ export default function SellerProductPage() {
   ];
   useEffect(() => {
     dispatch(getSellerProduct());
-  }, []);
+  }, [dispatch]);
 
   let [searchParams] = useSearchParams();
   let isAddSuccess = searchParams.get("isAddProductSuccess");

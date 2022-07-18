@@ -24,7 +24,7 @@ export default function SellerSoldProductPage() {
 
   useEffect(() => {
     dispatch(soldProduct());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="min-h-screen max-w-5xl mx-auto pt-10">

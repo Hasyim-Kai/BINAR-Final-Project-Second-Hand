@@ -8,28 +8,19 @@ import { interest, setInterestDetail } from "../redux/action/transactionAction";
 import Loading from "../components/Loading";
 
 export default function SellerInterestedProductPage() {
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState("");
   const { interestData } = useSelector((state) => state.interestReducer);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
 
-  const productCategory = [
-    "Semua",
-    "Hobi",
-    "Kendaraan",
-    "Baju",
-    "Elektronik",
-    "Kesehatan",
-  ];
-
   useEffect(() => {
-    setToken(localStorage.getItem("user:token"))
+    setToken(localStorage.getItem("user:token"));
     dispatch(interest());
-  }, []);
+  }, [dispatch]);
 
-  function moveToMyOrder(theItem, theId){
-    dispatch(setInterestDetail(theItem, theId))
+  function moveToMyOrder(theItem, theId) {
+    dispatch(setInterestDetail(theItem, theId));
   }
 
   return (
@@ -47,7 +38,7 @@ export default function SellerInterestedProductPage() {
       <div className="flex flex-wrap justify-between">
         <ProductCategoryPanel />
         <section className="grid grid-cols-2 lg:grid-cols-3 gap-3 max-w-2xl lg:mx-0 mx-auto w-full">
-          {isLoading == true ? (
+          {isLoading === true ? (
             <Loading />
           ) : interestData.length < 1 ? (
             <EmptyProductNotification isOnGrid={true} />
