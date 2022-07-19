@@ -5,7 +5,7 @@ import { setLoading } from "./globalAction";
 const token = localStorage.getItem("user:token");
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length > 6) {
+  if (data.password.length >= 6) {
     usersAPI
       .login(data)
       .then((res) => {
