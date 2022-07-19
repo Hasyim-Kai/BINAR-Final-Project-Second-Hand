@@ -39,3 +39,15 @@ deploy staging:
   environment:
     name: staging
     url: https://staging-second-hand-kelompok-5.herokuapp.com/
+
+deploy job:
+  stage: deploy
+  image: node:lts
+  only:
+    - main
+  environment:
+    name: production
+    url: https://final-project-binar-kelompok-5.vercel.app/
+  script:
+    - yarn global add vercel
+    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --confirm -t $VERCEL_TOKEN --prod)
