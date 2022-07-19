@@ -16,7 +16,6 @@ export default function BuyerDetailProductPage() {
   const { isSuccess, messageSuccess } = useSelector(
     (state) => state.globalReducer
   );
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
 
@@ -65,12 +64,21 @@ export default function BuyerDetailProductPage() {
             <h1 className="text-xl font-semibold mt-3">
               {ConvertToRupiah(buyerDetailProduct?.harga)}
             </h1>
-            <PurpleButton
-              // disable
-              text="Saya Tertarik dan Ingin Nego"
-              additionalStyles="text-sm w-full mt-5"
-              onClickFunction={openCloseModal}
-            />
+
+            {buyerDetailProduct?.dapatMenawar === false ? (
+              <PurpleButton
+                disable
+                text="Saya Tertarik dan Ingin Nego"
+                additionalStyles="text-sm w-full mt-5"
+                onClickFunction={openCloseModal}
+              />
+            ) : (
+              <PurpleButton
+                text="Saya Tertarik dan Ingin Nego"
+                additionalStyles="text-sm w-full mt-5"
+                onClickFunction={openCloseModal}
+              />
+            )}
           </div>
 
           <IdentityCard
