@@ -68,7 +68,6 @@ export const GetProfile = (token) => (dispatch) => {
 export const UpdateProfile =
   ({ form, selectedFile, navigate }) =>
   (dispatch) => {
-    console.log("isi action ", form);
     const formdata = new FormData();
     formdata.append("name", form.name);
     formdata.append("phone_number", form.phone_number);
@@ -76,7 +75,6 @@ export const UpdateProfile =
     formdata.append("profile_pict", selectedFile);
     formdata.append("city_id", form.city_id);
 
-    console.log(formdata.getAll);
     usersAPI
       .updateProfile(formdata, token)
       .then((res) => {
@@ -85,7 +83,6 @@ export const UpdateProfile =
           type: "SET_DATA_GET_PROFILE",
           payload: res?.data?.data,
         });
-        navigate("/");
       })
       .catch((err) => console.log(err));
   };

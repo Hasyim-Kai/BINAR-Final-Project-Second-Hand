@@ -1,8 +1,7 @@
 const initialState = {
   dataLogin: null,
   dataRegister: null,
-  dataGetProfile: null,
-  // dataUpdateProfile: null,
+  dataGetProfile: { name: "" },
 };
 
 const authReducer = (state = initialState, action) => {

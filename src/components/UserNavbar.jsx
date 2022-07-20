@@ -12,7 +12,6 @@ export default function UserNavbar() {
   let isLoginPage = useLocation().pathname === "/login" ? true : false;
   let isRegisterPage = useLocation().pathname === "/register" ? true : false;
   const token = localStorage.getItem("user:token");
-  const { dataGetProfile } = useSelector((state) => state.authReducer);
 
   const logout = () => {
     localStorage.clear();
@@ -55,7 +54,7 @@ export default function UserNavbar() {
             </button>
           </Link>
           <NotificationDropdown />
-          <Link to={"profile"} state={dataGetProfile}>
+          <Link to={"profile"}>
             <button className="">
               <img src="/icons/fi_user.svg" alt="user" />
             </button>
