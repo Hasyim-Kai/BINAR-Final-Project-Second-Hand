@@ -2,8 +2,6 @@ import * as usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 import { setLoading } from "./globalAction";
 
-const token = localStorage.getItem("user:token");
-
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
   if (data.password.length >= 6) {
     usersAPI
