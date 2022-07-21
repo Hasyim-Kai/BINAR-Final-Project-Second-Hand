@@ -12,16 +12,17 @@ export default function ProfilePage() {
   const dispatch = useDispatch();
   const [alert, setAlert] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
+  const token = localStorage.getItem("user:token");
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
-  const [preview, setPreview] = useState("/images/default_profile_photo.png");
+  const [imgUrl, setImgUrl] = useState("");
   const { country } = useSelector((state) => state.countryReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
 
   const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone_number, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  const [cityId, setCityId] = useState("");
+  const [city_id, setCityId] = useState("");
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
     dispatch(countryAction());
@@ -32,7 +33,7 @@ export default function ProfilePage() {
 
     // show image after select
     let objectUrl = URL.createObjectURL(selectedFile);
-    setPreview(objectUrl);
+    setImgUrl(objectUrl);
     console.log(selectedFile);
 
     // free memory when ever this component is unmounted
@@ -44,18 +45,19 @@ export default function ProfilePage() {
     setPhoneNumber(dataGetProfile.phone_number);
     setAddress(dataGetProfile.address);
     setCityId(dataGetProfile.city_id);
+    setImgUrl(dataGetProfile.img_url);
   }, [dataGetProfile]);
 
   const submit = (e) => {
     e.preventDefault();
     const form = {
       name: name,
-      phone_number: phoneNumber,
+      phone_number: phone_number,
       address: address,
-      city_id: cityId,
+      city_id: city_id,
     };
 
-    dispatch(UpdateProfile({ form, selectedFile, navigate }));
+    dispatch(UpdateProfile({ form, selectedFile, token, navigate }));
   };
 
   return (
@@ -79,11 +81,7 @@ export default function ProfilePage() {
             <div className="overflow-hidden w-28 h-28 rounded-xl hover:scale-110 transition-all duration-300">
               <img
                 className={`object-cover h-full w-full`}
-                src={
-                  dataGetProfile.img_url == null
-                    ? preview
-                    : dataGetProfile.img_url
-                }
+                src={imgUrl || "/images/default_profile_photo.png"}
                 alt="cat"
               />
             </div>
@@ -123,7 +121,7 @@ export default function ProfilePage() {
                 onChange={(e) => setCityId(e.target.value)}
                 className={inputStyle}
                 placeholder="Kota Anda"
-                value={cityId || ""}
+                value={city_id}
               >
                 {country.map((item) => (
                   <option value={item.id} key={item.id}>
@@ -141,7 +139,7 @@ export default function ProfilePage() {
                 type="text"
                 name="address"
                 placeholder="Alamat Anda"
-                value={address || ""}
+                value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
@@ -155,7 +153,7 @@ export default function ProfilePage() {
                 name="phone_number"
                 placeholder="Contoh: 08968888123"
                 pattern="{6,}"
-                value={phoneNumber || ""}
+                value={phone_number}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
