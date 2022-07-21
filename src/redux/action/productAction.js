@@ -45,7 +45,7 @@ export const getDetailProduct = (id) => (dispatch) => {
     });
 };
 
-export const AddNewProduct = (data, navigate) => (dispatch) => {
+export const AddNewProduct = (data, navigate, callback) => (dispatch) => {
   productAPI
     .add(data)
     .then((res) => {
@@ -54,7 +54,7 @@ export const AddNewProduct = (data, navigate) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      alert("ADD PRODUCT FAIL! " + err.response.data.message);
+      callback("ADD PRODUCT FAIL! " + err.response.data.message);
     });
 };
 

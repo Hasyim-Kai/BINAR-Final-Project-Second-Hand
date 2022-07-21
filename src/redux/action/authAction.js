@@ -2,8 +2,6 @@ import * as usersAPI from "../../services/api/usersAPI";
 import JwtDecode from "../../utility/JwtDecode";
 import { setLoading } from "./globalAction";
 
-const token = localStorage.getItem("user:token");
-
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
   if (data.password.length >= 6) {
     usersAPI
@@ -64,8 +62,9 @@ export const GetProfile = (token) => (dispatch) => {
 };
 
 export const UpdateProfile =
-  ({ form, selectedFile, navigate }) =>
+  ({ form, selectedFile, token, callback }) =>
   (dispatch) => {
+    console.log(selectedFile);
     const formdata = new FormData();
     formdata.append("name", form.name);
     formdata.append("phone_number", form.phone_number);
@@ -76,11 +75,13 @@ export const UpdateProfile =
     usersAPI
       .updateProfile(formdata, token)
       .then((res) => {
+        // callback()
         console.log(res.data.data);
         dispatch({
           type: "SET_DATA_GET_PROFILE",
           payload: res?.data?.data,
         });
+        dispatch(GetProfile(token));
       })
       .catch((err) => console.log(err));
   };
