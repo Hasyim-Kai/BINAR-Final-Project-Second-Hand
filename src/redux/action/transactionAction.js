@@ -71,7 +71,6 @@ export const getSellerNotif = () => (dispatch) => {
   transactionAPI
     .getSellerNotification()
     .then((res) => {
-      console.log(res.response);
       dispatch({ type: "SET_SELLER_NOTIF", payload: res.data.data });
     })
     .catch((err) => {
@@ -83,7 +82,6 @@ export const getBuyerNotif = () => (dispatch) => {
   transactionAPI
     .getBuyerNotification()
     .then((res) => {
-      console.log(res.response);
       dispatch({ type: "SET_BUYER_NOTIF", payload: res.data.data });
     })
     .catch((err) => {

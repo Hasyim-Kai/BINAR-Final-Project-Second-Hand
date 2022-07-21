@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FailAlert from "../components/FailAlert";
 import { LoginAction } from "../redux/action/authAction";
 import useForm from "../utility/UseForm";
@@ -8,8 +8,7 @@ import useForm from "../utility/UseForm";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { state } = useLocation();
-  console.log("login", state);
+  // const { state } = useLocation();
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 

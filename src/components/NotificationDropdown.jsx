@@ -49,10 +49,11 @@ const NotificationDropdown = () => {
       </button>
 
       {/* <!-- dropdown menu --> */}
-      <div className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl 
-        ${isDropdownOpen ? "flex flex-col" : "hidden"} z-50`}>
+      <div
+        className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl 
+        ${isDropdownOpen ? "flex flex-col" : "hidden"} z-50`}
+      >
         <ul className="lg:w-96 w-72">
-
           {/* IF NO NOTIF, SHOW EMPTY */}
           {sellerNotification?.length < 1 && buyerNotification?.length < 1 && (
             <h1 className="text-center">Currently Empty</h1>
@@ -65,11 +66,11 @@ const NotificationDropdown = () => {
               .concat(sellerNotification.produk_terjual)
               .map((item) => (
                 <NotificationItem
-                  productName={item.product.nama}
-                  productPrice={item.product.harga}
+                  productName={item.product?.nama}
+                  productPrice={item.product?.harga}
                   productBargainedPrice={item.harga_tawar}
                   dateBargained={item.createdAt}
-                  productImg={item.product.pictures[0]?.img_url}
+                  productImg={item.product?.pictures[0]?.img_url}
                   isBargained={true}
                   key={item.id}
                 />

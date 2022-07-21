@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function FailAlert({ isShow, setIsShow, message }) {
+  const timer = setTimeout(() => {
+    setIsShow(false);
+  }, 2000);
   useEffect(() => {
     if (isShow === true) {
-      const timer = setTimeout(() => {
-        setIsShow(false);
-      }, 2000);
       return () => {
         clearTimeout(timer);
       };
     }
-  }, []);
+  }, [timer, isShow]);
 
   return isShow ? (
     <div
