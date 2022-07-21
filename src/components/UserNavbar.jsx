@@ -1,8 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
-import NotificationDropdown from "../components/NotificationDropdown";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import NotificationDropdown from "../components/NotificationDropdown";
 import { GetProfile } from "../redux/action/authAction";
 
 export default function UserNavbar() {

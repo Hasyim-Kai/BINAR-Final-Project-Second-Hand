@@ -2,11 +2,15 @@ import { useState } from "react";
 
 export default function SuccessAlert({ showAlert = false, message }) {
   const [isShow, setIsShow] = useState(showAlert);
+  console.log(showAlert);
 
   if (showAlert === true) {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsShow(false);
     }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
   }
 
   return isShow ? (

@@ -5,7 +5,7 @@ import { setLoading } from "./globalAction";
 const token = localStorage.getItem("user:token");
 
 export const LoginAction = (data, navigate, callback) => (dispatch) => {
-  if (data.password.length > 6) {
+  if (data.password.length >= 6) {
     usersAPI
       .login(data)
       .then((res) => {
@@ -18,11 +18,10 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
         window.location.reload(false);
       })
       .catch((err) => {
-        console.log(err);
-        callback();
+        callback(err.response.data.message);
       });
   } else {
-    callback();
+    callback("Password must 6 character");
     return;
   }
 };
@@ -32,20 +31,19 @@ export const RegisterAction = (data, navigate, callback) => (dispatch) => {
     usersAPI
       .register(data)
       .then((res) => {
-        callback();
+        console.log(res);
         dispatch({
           type: "SET_DATA_REGISTER",
           payload: data,
         });
-        navigate("/login");
+        navigate("/login", { state: res });
       })
       .catch((err) => {
         console.log(err);
-        console.log(err.request.response);
-        alert("Register Failed");
+        callback(err.response.data.message);
       });
   } else {
-    alert("Password Below 6 Characters");
+    callback("Password must 6 character");
   }
 };
 
