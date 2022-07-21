@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FailAlert from "../components/FailAlert";
 import Loading from "../components/Loading";
 import { UpdateProfile } from "../redux/action/authAction";
@@ -10,34 +10,21 @@ import { HandleUploadImages } from "../utility/HandleUploadImages";
 export default function ProfilePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-  // const data = location.state;
   const [alert, setAlert] = useState(false);
-  const [nameCity, setNameCity] = useState("");
   const [selectedFile, setSelectedFile] = useState();
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
   const [preview, setPreview] = useState("/images/default_profile_photo.png");
-
   const { country } = useSelector((state) => state.countryReducer);
-
   const { dataGetProfile } = useSelector((state) => state.authReducer);
-  console.log("isi action", dataGetProfile);
-
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
-  const [name, setName] = useState(dataGetProfile.name);
-  const [phoneNumber, setPhoneNumber] = useState(dataGetProfile.phone_number);
-  const [address, setAddress] = useState(dataGetProfile.address);
-  const [cityId, setCityId] = useState(dataGetProfile.kota);
 
-  // const [name, setName] = useState(data.name);
-  // const [phoneNumber, setPhoneNumber] = useState(data.phone_number);
-  // const [address, setAddress] = useState(data.address);
-  // const [cityId, setCityId] = useState(data.city_id);
-  // const isLoading = useSelector((state) => state.globalReducer.isLoading);
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [cityId, setCityId] = useState("");
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    // console.log(country);
-    dispatch(countryAction(nameCity));
+    dispatch(countryAction());
 
     if (!selectedFile) {
       return;
@@ -50,8 +37,14 @@ export default function ProfilePage() {
 
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-    // console.log(preview);
-  }, [selectedFile, countryAction]);
+  }, [selectedFile, dispatch]);
+
+  useEffect(() => {
+    setName(dataGetProfile.name);
+    setPhoneNumber(dataGetProfile.phone_number);
+    setAddress(dataGetProfile.address);
+    setCityId(dataGetProfile.city_id);
+  }, [dataGetProfile]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -61,8 +54,8 @@ export default function ProfilePage() {
       address: address,
       city_id: cityId,
     };
+
     dispatch(UpdateProfile({ form, selectedFile, navigate }));
-    console.log(form);
   };
 
   return (
@@ -75,7 +68,7 @@ export default function ProfilePage() {
         />
       )}
 
-      {isLoading == true ? (
+      {isLoading === true ? (
         <Loading />
       ) : (
         <>
@@ -91,7 +84,6 @@ export default function ProfilePage() {
                     ? preview
                     : dataGetProfile.img_url
                 }
-                // src={data.img_url == null ? preview : data.img_url}
                 alt="cat"
               />
             </div>
@@ -120,24 +112,23 @@ export default function ProfilePage() {
                 placeholder="Nama Lengkap"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                // value={form.name}
-                // onChange={(e) => form("name", e.target.value)}
               />
             </div>
 
             <div className="mb-5">
               <label>Kota</label>
               <br />
-
-              {console.log("isi nama city", cityId)}
+              {/* {console.log(cityId)} */}
               <select
                 onChange={(e) => setCityId(e.target.value)}
                 className={inputStyle}
                 placeholder="Kota Anda"
+                value={cityId || ""}
               >
-                {/* <option value={null}>Kota Anda</option> */}
                 {country.map((item) => (
-                  <option value={item.id}>{item.nama_kota}</option>
+                  <option value={item.id} key={item.id}>
+                    {item.nama_kota}
+                  </option>
                 ))}
               </select>
             </div>
@@ -150,10 +141,8 @@ export default function ProfilePage() {
                 type="text"
                 name="address"
                 placeholder="Alamat Anda"
-                value={address}
+                value={address || ""}
                 onChange={(e) => setAddress(e.target.value)}
-                // value={form.address}
-                // onChange={(e) => setForm("address", e.target.value)}
               />
             </div>
 
@@ -166,10 +155,8 @@ export default function ProfilePage() {
                 name="phone_number"
                 placeholder="Contoh: 08968888123"
                 pattern="{6,}"
-                value={phoneNumber}
+                value={phoneNumber || ""}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                // value={form.phone_number}
-                // onChange={(e) => setForm("phone_number", e.target.value)}
               />
             </div>
 

@@ -4,7 +4,7 @@ import image from "../img-default.jfif";
 export default function IdentityCard({
   isEditEnabled = false,
   additionalStyle = "",
-  img = image,
+  img,
   name,
   city,
 }) {
@@ -13,7 +13,11 @@ export default function IdentityCard({
       className={`border rounded-xl p-4 flex items-center gap-4 mb-7 ${additionalStyle}`}
     >
       <div className="overflow-hidden rounded-xl">
-        <img className="object-cover h-14 w-14" src={img} alt="cat" />
+        <img
+          className="object-cover h-14 w-14"
+          src={img == null ? image : img}
+          alt="cat"
+        />
       </div>
 
       <div>

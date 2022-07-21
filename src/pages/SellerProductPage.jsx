@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSellerProduct } from "../redux/action/productAction";
 
 export default function SellerProductPage() {
-  const [token, setToken] = useState('')
+  const [token] = useState("");
   const dispatch = useDispatch();
   const { sellerProductList } = useSelector((state) => state.productReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
@@ -24,7 +24,7 @@ export default function SellerProductPage() {
   ];
   useEffect(() => {
     dispatch(getSellerProduct());
-  }, []);
+  }, [dispatch]);
 
   let [searchParams] = useSearchParams();
   let isAddSuccess = searchParams.get("isAddProductSuccess");

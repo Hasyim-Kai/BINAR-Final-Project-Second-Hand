@@ -1,11 +1,9 @@
-import dataAPI from "../../services/api/dataAPI";
+import * as dataAPI from "../../services/api/dataAPI";
 
-export const countryAction = (data) => (dispatch) => {
-  console.log(data);
+export const countryAction = () => (dispatch) => {
   dataAPI
-    .country(data)
+    .country()
     .then((res) => {
-      console.log("isi country action");
       dispatch({ type: "SET_COUNTRY", payload: res.data.data });
     })
     .catch((err) => console.log(err));

@@ -1,8 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
-import NotificationDropdown from "../components/NotificationDropdown";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import NotificationDropdown from "../components/NotificationDropdown";
 import { GetProfile } from "../redux/action/authAction";
 
 export default function UserNavbar() {
@@ -12,9 +11,7 @@ export default function UserNavbar() {
   let isLoginPage = useLocation().pathname === "/login" ? true : false;
   let isRegisterPage = useLocation().pathname === "/register" ? true : false;
   const token = localStorage.getItem("user:token");
-  const { dataGetProfile } = useSelector((state) => state.authReducer);
 
-  // console.log(dataGetProfile);
   const logout = () => {
     localStorage.clear();
     navigate("/");
@@ -23,7 +20,7 @@ export default function UserNavbar() {
 
   useEffect(() => {
     dispatch(GetProfile(token));
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return isLoginPage || isRegisterPage ? (
     <></>
@@ -56,7 +53,7 @@ export default function UserNavbar() {
             </button>
           </Link>
           <NotificationDropdown />
-          <Link to={"profile"} state={dataGetProfile}>
+          <Link to={"profile"}>
             <button className="">
               <img src="/icons/fi_user.svg" alt="user" />
             </button>

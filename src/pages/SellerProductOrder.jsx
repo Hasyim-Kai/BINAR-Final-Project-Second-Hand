@@ -1,16 +1,14 @@
-import { DateFormat } from "../utility/DateFormat";
-import { useState, useEffect } from "react";
-import { ConvertToRupiah } from "../utility/ConvertToRupiah";
-import { Link, useParams } from "react-router-dom";
-import SuccessOrderModal from "../components/SuccessOrderModal";
-import OrderStatusModal from "../components/OrderStatusModal";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import OrderStatusModal from "../components/OrderStatusModal";
+import SuccessOrderModal from "../components/SuccessOrderModal";
 import { acceptOrRefuseTransaction } from "../redux/action/transactionAction";
-// import SellerOrderItem from "../components/SellerOrderItem";
+import { ConvertToRupiah } from "../utility/ConvertToRupiah";
+import { DateFormat } from "../utility/DateFormat";
 
 export default function SellerProductOrder() {
   const dispatch = useDispatch();
-  // const [isOrderSucceed, setIsOrderSucceed] = useState(false);
   const { interestDetailData } = useSelector((state) => state.interestReducer);
   const [isModalOrderSucceedOpen, setIsModalOrderSucceedOpen] = useState(false);
   const [isOrderAccepted, setIsOrderAccepted] = useState(false);
@@ -27,22 +25,13 @@ export default function SellerProductOrder() {
   function acceptTransaction() {
     setIsOrderAccepted(true);
     openCloseOrderAcceptedModal();
-    dispatch(acceptOrRefuseTransaction(interestDetailData.id, true))
+    dispatch(acceptOrRefuseTransaction(interestDetailData.id, true));
   }
 
   function refuseTransaction() {
     console.log(`Tolak Transaksi`);
-    dispatch(acceptOrRefuseTransaction(interestDetailData.id, false))
+    dispatch(acceptOrRefuseTransaction(interestDetailData.id, false));
   }
-
-  let { id } = useParams();
-  console.log(id);
-
-  useEffect(() => {
-    console.log(interestDetailData)
-    // dispatch(interest);
-    // dispatch(setInterestDetail(interestData, id));
-  }, []);
 
   return (
     <div className="min-h-screen w-full relative">
@@ -72,16 +61,22 @@ export default function SellerProductOrder() {
           <div className="overflow-hidden rounded-xl">
             <img
               className="object-cover h-14 w-14"
-              src={interestDetailData.penawar.profile?.img_url === null ? 
-                '/images/default_profile_photo.png' 
-                : interestDetailData.penawar.profile?.img_url}             
+              src={
+                interestDetailData.penawar.profile?.img_url === null
+                  ? "/images/default_profile_photo.png"
+                  : interestDetailData.penawar.profile?.img_url
+              }
               alt="Profile"
             />
           </div>
 
           <div>
-            <h1 className="font-semibold mb-1">{interestDetailData.penawar.profile.name}</h1>
-            <p className="text-gray-500 text-xs">{interestDetailData.penawar.profile.kotum.nama_kota}</p>
+            <h1 className="font-semibold mb-1">
+              {interestDetailData.penawar.profile.name}
+            </h1>
+            <p className="text-gray-500 text-xs">
+              {interestDetailData.penawar.profile.kotum.nama_kota}
+            </p>
           </div>
         </div>
 
@@ -100,10 +95,16 @@ export default function SellerProductOrder() {
             <div>
               <p className="text-sm text-gray-500">Penawaran Produk</p>
               <h1 className="">{interestDetailData.product.nama}</h1>
-              <h1 className="">{ConvertToRupiah(interestDetailData.product.harga)}</h1>
-              <h1 className="">Ditawar {ConvertToRupiah(interestDetailData.harga_tawar)}</h1>
+              <h1 className="">
+                {ConvertToRupiah(interestDetailData.product.harga)}
+              </h1>
+              <h1 className="">
+                Ditawar {ConvertToRupiah(interestDetailData.harga_tawar)}
+              </h1>
             </div>
-            <p className="text-sm text-gray-500 ml-auto">{DateFormat(interestDetailData.createdAt)}</p>
+            <p className="text-sm text-gray-500 ml-auto">
+              {DateFormat(interestDetailData.createdAt)}
+            </p>
           </div>
 
           {isOrderAccepted ? (

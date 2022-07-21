@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { AddNewProduct } from "../redux/action/productAction";
 
 export default function NewProductPage() {
-  const form = useRef(null)
+  const form = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedFile, setSelectedFile] = useState();
@@ -13,7 +13,9 @@ export default function NewProductPage() {
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
-    if (!selectedFile) { return; }
+    if (!selectedFile) {
+      return;
+    }
 
     let temporaryPreview = [];
     selectedFile.forEach((image) => {
@@ -23,8 +25,10 @@ export default function NewProductPage() {
 
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl)
-    return () => { preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview)); };
-  }, [selectedFile]);
+    return () => {
+      preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview));
+    };
+  }, [selectedFile, preview]);
 
   function handleUploadImages(event) {
     if (event.target.files.length > 4) {
@@ -32,23 +36,26 @@ export default function NewProductPage() {
       alert(`Cannot upload files more than 4`);
       return;
     } else {
-      let imageList = Array.from(event.target.files)
-      imageList.forEach( image => { if(image.size > 637822){ 
-        alert(`Max Image Size is 500 kb`); return;
-      }})
+      let imageList = Array.from(event.target.files);
+      imageList.forEach((image) => {
+        if (image.size > 637822) {
+          alert(`Max Image Size is 500 kb`);
+          return;
+        }
+      });
       setSelectedFile(imageList);
     }
   }
 
   const submit = (e) => {
     e.preventDefault();
-    const dataProduct = new FormData(form.current)  
-    selectedFile.forEach(img => {
+    const dataProduct = new FormData(form.current);
+    selectedFile.forEach((img) => {
       // console.log(img)
       dataProduct.append("product_pict", img, img.name);
-    })  
+    });
     // for (var pair of dataProduct.entries()) {
-    //   console.table(pair[0]+ ', ' + pair[1]); 
+    //   console.table(pair[0]+ ', ' + pair[1]);
     // }
     dispatch(AddNewProduct(dataProduct, navigate));
   };
@@ -164,14 +171,16 @@ export default function NewProductPage() {
               </div>
             ))}
         </div>
-
-        <button className={`h-10 mt-2 py-2 px-3 mr-4 lg:mr-10 rounded-xl w-2/5 border border-primaryPurple`}>
+        <button
+          className={`h-10 mt-2 py-2 px-3 rounded-xl w-1/2 border border-primaryPurple `}
+        >
           Preview
         </button>
-        <button className={`h-10 py-2 px-1 text-white bg-primaryPurple rounded-xl w-2/5`}>
+        <button
+          className={`h-10 py-2 px-1 text-white bg-primaryPurple rounded-xl w-1/2`}
+        >
           Simpan
         </button>
-
       </form>
     </div>
   );

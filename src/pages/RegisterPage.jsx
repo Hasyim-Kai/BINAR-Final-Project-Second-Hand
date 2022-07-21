@@ -30,7 +30,13 @@ export default function RegisterPage() {
           alt="Banner"
         />
       </div>
-      {alert && <SuccessAlert showAlert={true} message={"Register Success"} />}
+      {alert && (
+        <SuccessAlert
+          isShow={alert}
+          setIsShow={setAlert}
+          message={"Register Success"}
+        />
+      )}
       <section className="flex flex-col items-center justify-center mx-auto">
         <form onSubmit={Registerclick} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">

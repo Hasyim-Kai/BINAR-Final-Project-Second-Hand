@@ -1,4 +1,4 @@
-import transactionAPI from "../../services/api/transactionAPI";
+import * as transactionAPI from "../../services/api/transactionAPI";
 import { setSuccess } from "./globalAction";
 import { setLoading } from "./globalAction";
 
@@ -58,7 +58,7 @@ export const acceptOrRefuseTransaction = (id, acceptOrRefuse) => (dispatch) => {
 export const successOrCancelTransaction =
   (id, acceptOrRefuse, navigate) => (dispatch) => {
     transactionAPI
-      .successOrCancelTransaction(id, { opsi: (acceptOrRefuse === 'true') })
+      .successOrCancelTransaction(id, { opsi: acceptOrRefuse === "true" })
       .then((res) => {
         // dispatch({ type: "SET_SOLD_LIST", payload: res.data.data });
         console.log(res);

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
 export default function ProductItem({
@@ -12,7 +11,7 @@ export default function ProductItem({
   interested,
   token,
   onCickFunction = () => {},
-  thisItem = {}
+  thisItem = {},
 }) {
   return (
     <>
@@ -26,8 +25,11 @@ export default function ProductItem({
             ? "/my-product/" + id
             : "/product/" + id
         }
-      >       
-        <div onClick={()=> onCickFunction(thisItem, id)} className="p-2 border-2 border-gray-100 rounded-md w-full hover:shadow-lg hover:shadow-purple-100 transition-all duration-300">
+      >
+        <div
+          onClick={() => onCickFunction(thisItem, id)}
+          className="p-2 border-2 border-gray-100 rounded-md w-full hover:shadow-lg hover:shadow-purple-100 transition-all duration-300"
+        >
           <div className="overflow-hidden rounded-md mb-2">
             <img className="object-cover h-28 w-full" src={img} alt="cat" />
           </div>

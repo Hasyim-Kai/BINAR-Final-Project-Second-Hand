@@ -1,13 +1,14 @@
+import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useParams } from "react-router-dom";
-import ProductImageCarousel from "../components/ProductImageCarousel";
+import { useParams } from "react-router-dom";
 import BuyerModal from "../components/BuyerModal";
 import IdentityCard from "../components/IdentityCard";
+import ProductImageCarousel from "../components/ProductImageCarousel";
 import PurpleButton from "../components/PurpleButton";
+import SuccessAlert from "../components/SuccessAlert";
 import { getDetailProduct } from "../redux/action/productAction";
 import { ConvertToRupiah } from "../utility/ConvertToRupiah";
-import SuccessAlert from "../components/SuccessAlert";
 
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
@@ -15,23 +16,20 @@ export default function BuyerDetailProductPage() {
   const { isSuccess, messageSuccess } = useSelector(
     (state) => state.globalReducer
   );
-
-  console.log(buyerDetailProduct);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
 
-  function openCloseModal() {
-    setIsModalOpen(!isModalOpen);
-  }
+  const openCloseModal = useCallback(() => {
+    setIsModalOpen((isModalOpen) => !isModalOpen);
+  }, []);
   useEffect(() => {
     dispatch(getDetailProduct(id));
-    isSuccess == true && openCloseModal();
-  }, []);
+    isSuccess === true && openCloseModal();
+  }, [dispatch, id, isSuccess, openCloseModal]);
 
   return (
     <div className="relative">
-      {isSuccess == true && (
+      {isSuccess === true && (
         <SuccessAlert showAlert={isSuccess} message={messageSuccess} />
       )}
 
@@ -66,16 +64,25 @@ export default function BuyerDetailProductPage() {
             <h1 className="text-xl font-semibold mt-3">
               {ConvertToRupiah(buyerDetailProduct?.harga)}
             </h1>
-            <PurpleButton
-              // disable
-              text="Saya Tertarik dan Ingin Nego"
-              additionalStyles="text-sm w-full mt-5"
-              onClickFunction={openCloseModal}
-            />
+
+            {buyerDetailProduct?.dapatMenawar === false ? (
+              <PurpleButton
+                disable
+                text="Saya Tertarik dan Ingin Nego"
+                additionalStyles="text-sm w-full mt-5"
+                onClickFunction={openCloseModal}
+              />
+            ) : (
+              <PurpleButton
+                text="Saya Tertarik dan Ingin Nego"
+                additionalStyles="text-sm w-full mt-5"
+                onClickFunction={openCloseModal}
+              />
+            )}
           </div>
 
           <IdentityCard
-            // img={buyerDetailProduct?}
+            img={buyerDetailProduct?.seller_img_url}
             name={buyerDetailProduct?.seller_name}
             city={buyerDetailProduct?.seller_kota}
           />
