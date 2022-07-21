@@ -54,7 +54,7 @@ export const AddNewProduct = (data, navigate) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      alert("ADD PRODUCT FAIL");
+      alert("ADD PRODUCT FAIL! " + err.response.data.message);
     });
 };
 
@@ -67,7 +67,7 @@ export const publishProduct = (id, navigate) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-      alert("PUBLISH PRODUCT FAIL");
+      alert("PUBLISH PRODUCT FAIL! " + err.response.data.message);
     });
 };
 
