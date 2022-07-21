@@ -49,12 +49,10 @@ const NotificationDropdown = () => {
       </button>
 
       {/* <!-- dropdown menu --> */}
-      <div
-        className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl ${
-          isDropdownOpen ? "flex flex-col" : "hidden"
-        } z-50`}
-      >
+      <div className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl 
+        ${isDropdownOpen ? "flex flex-col" : "hidden"} z-50`}>
         <ul className="lg:w-96 w-72">
+
           {/* IF NO NOTIF, SHOW EMPTY */}
           {sellerNotification?.length < 1 && buyerNotification?.length < 1 && (
             <h1 className="text-center">Currently Empty</h1>

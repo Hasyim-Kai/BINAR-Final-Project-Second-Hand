@@ -2,8 +2,8 @@ const initialDataState = {
   interestDetailData: {},
   interestData: [],
   soldData: [],
-  sellerNotification: [],
-  buyerNotification: [],
+  sellerNotification: {},
+  buyerNotification: {},
 };
 
 const interestReducer = (state = initialDataState, action) => {
