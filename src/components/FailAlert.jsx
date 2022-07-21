@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect } from "react";
 
-export default function FailAlert({ showAlert = false, message }) {
-  const [isShow, setIsShow] = useState(showAlert);
-  // const timer = (async) => {
-  //   setTimeout(() => {
-  //     setIsShow(false);
-  //     console.log("satu ");
-  //   }, 1000);
-  //   clearTimeout(timer);
-  //   console.log("dua");
-  // };
+export default function FailAlert({ isShow, setIsShow, message }) {
+  const timer = setTimeout(() => {
+    setIsShow(false);
+  }, 2000);
+  useEffect(() => {
+    if (isShow === true) {
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [timer, isShow]);
 
   return isShow ? (
     <div

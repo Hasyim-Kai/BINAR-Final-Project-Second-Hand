@@ -8,7 +8,9 @@ import useForm from "../utility/UseForm";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const { state } = useLocation();
   const [alert, setAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
 
@@ -19,7 +21,12 @@ const LoginPage = () => {
 
   const login = (e) => {
     e.preventDefault();
-    dispatch(LoginAction(form, navigate, () => setAlert(true)));
+    dispatch(
+      LoginAction(form, navigate, (e) => {
+        setAlert(true);
+        setAlertMessage(e);
+      })
+    );
   };
 
   useEffect(() => {
@@ -29,7 +36,7 @@ const LoginPage = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(alert);
   return (
     <div className="grid lg:grid-cols-2 h-screen">
       <div className="hidden lg:inline-block h-screen">
@@ -39,7 +46,9 @@ const LoginPage = () => {
           alt="banner"
         />
       </div>
-      {alert && <FailAlert showAlert={true} message={"Login is failed"} />}
+      {alert && (
+        <FailAlert isShow={alert} setIsShow={setAlert} message={alertMessage} />
+      )}
       <section className="flex flex-col items-center justify-center mx-auto">
         <form onSubmit={login} className="lg:w-96 w-72">
           <h1 className="mb-5 text-xl">

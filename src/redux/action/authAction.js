@@ -18,11 +18,10 @@ export const LoginAction = (data, navigate, callback) => (dispatch) => {
         window.location.reload(false);
       })
       .catch((err) => {
-        console.log(err);
-        callback();
+        callback(err.response.data.message);
       });
   } else {
-    callback();
+    callback("Password must 6 character");
     return;
   }
 };
@@ -32,20 +31,19 @@ export const RegisterAction = (data, navigate, callback) => (dispatch) => {
     usersAPI
       .register(data)
       .then((res) => {
-        callback();
+        console.log(res);
         dispatch({
           type: "SET_DATA_REGISTER",
           payload: data,
         });
-        navigate("/login");
+        navigate("/login", { state: res });
       })
       .catch((err) => {
         console.log(err);
-        console.log(err.request.response);
-        alert("Register Failed");
+        callback(err.response.data.message);
       });
   } else {
-    alert("Password Below 6 Characters");
+    callback("Password must 6 character");
   }
 };
 
@@ -68,7 +66,6 @@ export const GetProfile = (token) => (dispatch) => {
 export const UpdateProfile =
   ({ form, selectedFile, navigate }) =>
   (dispatch) => {
-    console.log("isi action ", form);
     const formdata = new FormData();
     formdata.append("name", form.name);
     formdata.append("phone_number", form.phone_number);
@@ -76,7 +73,6 @@ export const UpdateProfile =
     formdata.append("profile_pict", selectedFile);
     formdata.append("city_id", form.city_id);
 
-    console.log(formdata.getAll);
     usersAPI
       .updateProfile(formdata, token)
       .then((res) => {
@@ -85,7 +81,6 @@ export const UpdateProfile =
           type: "SET_DATA_GET_PROFILE",
           payload: res?.data?.data,
         });
-        navigate("/");
       })
       .catch((err) => console.log(err));
   };

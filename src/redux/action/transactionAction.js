@@ -11,8 +11,9 @@ export const postTransaction = (id, postData) => (dispatch) => {
       console.log(res.response);
       dispatch(setSuccess(true, "success adding to wistlist"));
     })
-    .catch((res) => {
-      console.log(res);
+    .catch((err) => {
+      console.log(err);
+      alert("ADD TRANSACTION FAIL! " + err.response.data.message);
     });
 };
 
@@ -70,7 +71,6 @@ export const getSellerNotif = () => (dispatch) => {
   transactionAPI
     .getSellerNotification()
     .then((res) => {
-      console.log(res.response);
       dispatch({ type: "SET_SELLER_NOTIF", payload: res.data.data });
     })
     .catch((err) => {
@@ -82,7 +82,6 @@ export const getBuyerNotif = () => (dispatch) => {
   transactionAPI
     .getBuyerNotification()
     .then((res) => {
-      console.log(res.response);
       dispatch({ type: "SET_BUYER_NOTIF", payload: res.data.data });
     })
     .catch((err) => {

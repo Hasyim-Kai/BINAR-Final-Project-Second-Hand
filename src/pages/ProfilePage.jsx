@@ -18,10 +18,10 @@ export default function ProfilePage() {
   const { dataGetProfile } = useSelector((state) => state.authReducer);
   const isLoading = useSelector((state) => state.globalReducer.isLoading);
 
-  const [name, setName] = useState(dataGetProfile.name);
-  const [phoneNumber, setPhoneNumber] = useState(dataGetProfile.phone_number);
-  const [address, setAddress] = useState(dataGetProfile.address);
-  const [cityId, setCityId] = useState(dataGetProfile.city_id);
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [cityId, setCityId] = useState("");
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
     dispatch(countryAction());
@@ -39,6 +39,13 @@ export default function ProfilePage() {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile, dispatch]);
 
+  useEffect(() => {
+    setName(dataGetProfile.name);
+    setPhoneNumber(dataGetProfile.phone_number);
+    setAddress(dataGetProfile.address);
+    setCityId(dataGetProfile.city_id);
+  }, [dataGetProfile]);
+
   const submit = (e) => {
     e.preventDefault();
     const form = {
@@ -47,6 +54,7 @@ export default function ProfilePage() {
       address: address,
       city_id: cityId,
     };
+
     dispatch(UpdateProfile({ form, selectedFile, navigate }));
   };
 
@@ -110,16 +118,17 @@ export default function ProfilePage() {
             <div className="mb-5">
               <label>Kota</label>
               <br />
-
-              {console.log("isi nama city", cityId)}
+              {/* {console.log(cityId)} */}
               <select
                 onChange={(e) => setCityId(e.target.value)}
                 className={inputStyle}
                 placeholder="Kota Anda"
-                value={cityId}
+                value={cityId || ""}
               >
                 {country.map((item) => (
-                  <option value={item.id}>{item.nama_kota}</option>
+                  <option value={item.id} key={item.id}>
+                    {item.nama_kota}
+                  </option>
                 ))}
               </select>
             </div>
@@ -132,7 +141,7 @@ export default function ProfilePage() {
                 type="text"
                 name="address"
                 placeholder="Alamat Anda"
-                value={address}
+                value={address || ""}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </div>
@@ -146,7 +155,7 @@ export default function ProfilePage() {
                 name="phone_number"
                 placeholder="Contoh: 08968888123"
                 pattern="{6,}"
-                value={phoneNumber}
+                value={phoneNumber || ""}
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
