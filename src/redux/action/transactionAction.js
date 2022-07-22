@@ -10,6 +10,7 @@ export const postTransaction = (id, postData) => (dispatch) => {
     .then((res) => {
       console.log(res.response);
       dispatch(setSuccess(true, "success adding to wistlist"));
+      window.location.reload(false);
     })
     .catch((err) => {
       console.log(err);
