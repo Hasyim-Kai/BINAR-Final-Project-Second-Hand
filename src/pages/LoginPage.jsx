@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import FailAlert from "../components/FailAlert";
+import SuccessAlert from "../components/SuccessAlert";
 import { LoginAction } from "../redux/action/authAction";
 import useForm from "../utility/UseForm";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { state } = useLocation();
+  const { state } = useLocation();
   const [alert, setAlert] = useState(false);
+  const [alertSuccess, setAlertSuccess] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
@@ -30,6 +32,9 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
+    if (state != null) {
+      setAlertSuccess(true);
+    }
     const token = localStorage.getItem("user:token");
     if (token) {
       navigate("/");
@@ -48,6 +53,13 @@ const LoginPage = () => {
       </div>
       {alert && (
         <FailAlert isShow={alert} setIsShow={setAlert} message={alertMessage} />
+      )}
+      {alertSuccess && (
+        <SuccessAlert
+          isShow={alertSuccess}
+          setIsShow={setAlertSuccess}
+          message={state}
+        />
       )}
       <section className="flex flex-col items-center justify-center mx-auto">
         <form onSubmit={login} className="lg:w-96 w-72">
