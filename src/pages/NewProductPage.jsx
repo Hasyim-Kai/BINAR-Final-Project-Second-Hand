@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { AddNewProduct } from "../redux/action/productAction";
+import FailAlert from "../components/FailAlert";
 
 export default function NewProductPage() {
   const form = useRef(null);
@@ -10,6 +11,8 @@ export default function NewProductPage() {
   const [selectedFile, setSelectedFile] = useState();
   const [preview, setPreview] = useState([]);
   const inputStyle = `rounded-xl px-3 py-2 border w-full mt-1`;
+  const [alert, setAlert] = useState(false);
+  const [messageAlert, setAlertMessage] = useState("");
 
   // create a preview as a side effect, whenever selected file is changed
   useEffect(() => {
@@ -25,10 +28,10 @@ export default function NewProductPage() {
 
     // free memory when ever this component is unmounted
     // return () => URL.revokeObjectURL(objectUrl)
-    return () => {
-      preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview));
-    };
-  }, [selectedFile, preview]);
+    // return () => {
+    //   preview.forEach((imagePreview) => URL.revokeObjectURL(imagePreview));
+    // };
+  }, [selectedFile]);
 
   function handleUploadImages(event) {
     if (event.target.files.length > 4) {
@@ -51,24 +54,25 @@ export default function NewProductPage() {
     e.preventDefault();
     const dataProduct = new FormData(form.current);
     selectedFile.forEach((img) => {
-      // console.log(img)
       dataProduct.append("product_pict", img, img.name);
     });
     // for (var pair of dataProduct.entries()) {
     //   console.table(pair[0]+ ', ' + pair[1]);
     // }
-    dispatch(AddNewProduct(dataProduct, navigate));
+    dispatch(
+      AddNewProduct(dataProduct, navigate, (e) => {
+        setAlert(true);
+        setAlertMessage(e);
+      })
+    );
   };
 
   return (
     <div className="min-h-screen max-w-4xl mx-auto relative flex flex-col items-center gap-4 pt-10">
       {/* show alert */}
-      {/* {alert && (
-        <FailAlert
-          showAlert={true}
-          message={"Cannot upload files more than 1 MB"}
-        />
-      )} */}
+      {alert && (
+        <FailAlert isShow={true} setIsShow={setAlert} message={messageAlert} />
+      )}
       <Link className="absolute left-28" to="/">
         <img src="/icons/fi_arrow-left.svg" alt="arrow left" />
       </Link>
@@ -86,7 +90,6 @@ export default function NewProductPage() {
             type="text"
             name="nama"
             placeholder="Nama Produk"
-            // onChange={(e) => setForm("nama", e.target.value)}
             required
           />
         </div>
@@ -99,7 +102,6 @@ export default function NewProductPage() {
             type="number"
             name="harga"
             placeholder="Rp. 0,0"
-            // onChange={(e) => setForm("harga", e.target.value)}
             required
           />
         </div>
@@ -113,7 +115,6 @@ export default function NewProductPage() {
             name="kategori_id"
             id="kategori_id"
             required
-            // onChange={(e) => setForm("kategori_id", e.target.value)}
           >
             <option value="1">Hobi</option>
             <option value="2">Kendaraan</option>
@@ -131,7 +132,6 @@ export default function NewProductPage() {
             name="deskripsi"
             cols="10"
             rows="4"
-            // onChange={(e) => setForm("deskripsi", e.target.value)}
             placeholder="Contoh: Jalan Ikan Hiu 33"
             required
           ></textarea>
@@ -161,8 +161,8 @@ export default function NewProductPage() {
 
           {/* IMAGE PREVIEW */}
           {selectedFile &&
-            preview.map((imagePreview) => (
-              <div className="overflow-hidden w-28 h-28 rounded-xl">
+            preview.map((imagePreview, index) => (
+              <div key={index} className="overflow-hidden w-28 h-28 rounded-xl">
                 <img
                   className={`object-cover h-full w-full`}
                   src={imagePreview}

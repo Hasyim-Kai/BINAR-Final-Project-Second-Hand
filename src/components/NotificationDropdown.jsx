@@ -50,7 +50,6 @@ const NotificationDropdown = () => {
       <div className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl 
         ${isDropdownOpen ? "flex flex-col" : "hidden"} max-h-96 overflow-y-scroll z-50`}>
         <ul className="lg:w-96 w-72">
-
           {/* IF NO NOTIF, SHOW EMPTY */}
           {sellerNotification?.length < 1 && buyerNotification?.length < 1 && (
             <h1 className="text-center">Currently Empty</h1>
@@ -60,11 +59,11 @@ const NotificationDropdown = () => {
           {(sellerNotification.penawaran_masuk?.length > 0 || sellerNotification.produk_terjual?.length > 0)
           && sellerNotification.penawaran_masuk.map((item) => (
                 <NotificationItem
-                  productName={item.product.nama}
-                  productPrice={item.product.harga}
+                  productName={item.product?.nama}
+                  productPrice={item.product?.harga}
                   productBargainedPrice={item.harga_tawar}
                   dateBargained={item.createdAt}
-                  productImg={item.product.pictures[0]?.img_url}
+                  productImg={item.product?.pictures[0]?.img_url}
                   isBargained={true}
                   key={item.id}
                 />
