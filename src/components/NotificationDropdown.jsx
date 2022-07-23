@@ -8,9 +8,7 @@ import { useState, useEffect, useRef } from "react";
 
 const NotificationDropdown = () => {
   const dispatch = useDispatch();
-  const { sellerNotification, buyerNotification } = useSelector(
-    (state) => state.interestReducer
-  );
+  const { sellerNotification, buyerNotification } = useSelector((state) => state.interestReducer);
   const wrapperRef = useRef(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   function handleSetDropdownOpen(event) {
@@ -50,7 +48,7 @@ const NotificationDropdown = () => {
 
       {/* <!-- dropdown menu --> */}
       <div className={`absolute -right-7 p-5 mt-1 bg-white rounded-xl border shadow-xl 
-        ${isDropdownOpen ? "flex flex-col" : "hidden"} z-50`}>
+        ${isDropdownOpen ? "flex flex-col" : "hidden"} max-h-96 overflow-y-scroll z-50`}>
         <ul className="lg:w-96 w-72">
 
           {/* IF NO NOTIF, SHOW EMPTY */}
@@ -59,11 +57,8 @@ const NotificationDropdown = () => {
           )}
 
           {/* SELLER NOTIFICATION */}
-          {sellerNotification.penawaran_masuk?.length > 0 &&
-            sellerNotification.produk_terjual?.length > 0 &&
-            sellerNotification.penawaran_masuk
-              .concat(sellerNotification.produk_terjual)
-              .map((item) => (
+          {(sellerNotification.penawaran_masuk?.length > 0 || sellerNotification.produk_terjual?.length > 0)
+          && sellerNotification.penawaran_masuk.map((item) => (
                 <NotificationItem
                   productName={item.product.nama}
                   productPrice={item.product.harga}
@@ -76,13 +71,13 @@ const NotificationDropdown = () => {
               ))}
 
           {/* BUYER NOTIFICATION */}
-          {buyerNotification.penawaran_diterbitkan?.length > 0 &&
-            buyerNotification.penawaran_sudah_diterima?.length > 0 &&
-            buyerNotification.produk_dibeli?.length > 0 &&
+          {(buyerNotification.penawaran_diterbitkan?.length > 0 ||
+            buyerNotification.penawaran_sudah_diterima?.length > 0 ||
+            buyerNotification.produk_dibeli?.length > 0) &&
             buyerNotification.penawaran_diterbitkan
               .concat(
                 buyerNotification.penawaran_sudah_diterima,
-                buyerNotification.produk_dibeli?.length
+                buyerNotification.produk_dibeli
               )
               .map((item) => (
                 <NotificationItem
