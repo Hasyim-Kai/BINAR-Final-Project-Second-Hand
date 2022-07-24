@@ -49,8 +49,7 @@ export const AddNewProduct = (data, navigate, callback) => (dispatch) => {
   productAPI
     .add(data)
     .then((res) => {
-      console.log(res);
-      navigate("/offer");
+      navigate("/offer/?isAddProductSuccess=true");
     })
     .catch((err) => {
       console.log(err);
@@ -62,8 +61,7 @@ export const publishProduct = (id, navigate) => (dispatch) => {
   productAPI
     .publishProduct(id, { published: true })
     .then((res) => {
-      console.log(res);
-      navigate("/offer/?isAddProductSuccess=true");
+      navigate("/offer/?isAddPublishProductSuccess=true");
     })
     .catch((err) => {
       console.log(err);

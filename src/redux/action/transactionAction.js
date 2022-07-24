@@ -1,16 +1,12 @@
 import * as transactionAPI from "../../services/api/transactionAPI";
-import { setSuccess } from "./globalAction";
 import { setLoading } from "./globalAction";
 
 // buyer transaction
-export const postTransaction = (id, postData) => (dispatch) => {
-  console.log(`isi id ${id}, post data ${postData}`);
+export const postTransaction = (id, postData, navigate) => (dispatch) => {
   transactionAPI
     .postAll(id, postData)
     .then((res) => {
-      console.log(res.response);
-      dispatch(setSuccess(true, "success adding to wistlist"));
-      window.location.reload(false);
+      navigate(`/product/${id}/?successTransactionProduct=true`);
     })
     .catch((err) => {
       console.log(err);

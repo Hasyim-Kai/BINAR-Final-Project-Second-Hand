@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import BuyerModal from "../components/BuyerModal";
 import IdentityCard from "../components/IdentityCard";
 import ProductImageCarousel from "../components/ProductImageCarousel";
@@ -12,27 +12,32 @@ import { ConvertToRupiah } from "../utility/ConvertToRupiah";
 
 export default function BuyerDetailProductPage() {
   const dispatch = useDispatch();
+  const [alertSuccess, setAlertSuccess] = useState(false);
   const { buyerDetailProduct } = useSelector((state) => state.productReducer);
-  const { isSuccess, messageSuccess } = useSelector(
-    (state) => state.globalReducer
-  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   let { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const isSuccess = searchParams.get("successTransactionProduct");
 
   const openCloseModal = useCallback(() => {
     setIsModalOpen((isModalOpen) => !isModalOpen);
   }, []);
   useEffect(() => {
     dispatch(getDetailProduct(id));
-    isSuccess === true && openCloseModal();
+    if (isSuccess) {
+      setAlertSuccess(true);
+    }
   }, [dispatch, id, isSuccess, openCloseModal]);
 
   return (
     <div className="relative">
-      {isSuccess === true && (
-        <SuccessAlert showAlert={isSuccess} message={messageSuccess} />
+      {isSuccess && (
+        <SuccessAlert
+          isShow={alertSuccess}
+          setIsShow={setAlertSuccess}
+          message={"Harga tawarmu berhasil dikirim ke penjual"}
+        />
       )}
-
       <BuyerModal
         id={id}
         modalState={isModalOpen}
