@@ -47,7 +47,7 @@ export default function SellerDetailProductPage() {
             </h1>
             <p className="text-gray-500 mt-1">{buyerDetailProduct?.category}</p>
             <h1 className="text-xl font-semibold mt-3">
-              {ConvertToRupiah(250000)}
+              {ConvertToRupiah(buyerDetailProduct?.harga)}
             </h1>
             <PurpleButton
               text="Terbitkan"

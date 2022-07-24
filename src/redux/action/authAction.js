@@ -29,12 +29,11 @@ export const RegisterAction = (data, navigate, callback) => (dispatch) => {
     usersAPI
       .register(data)
       .then((res) => {
-        console.log(res);
         dispatch({
           type: "SET_DATA_REGISTER",
           payload: data,
         });
-        navigate("/login", { state: res });
+        navigate("/login", { state: res.data.data });
       })
       .catch((err) => {
         console.log(err);

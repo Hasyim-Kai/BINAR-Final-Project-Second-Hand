@@ -1,11 +1,10 @@
-import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 import IdentityCard from "../components/IdentityCard";
-import SuccessAlert from "../components/SuccessAlert";
 import ProductCategoryPanel from "../components/ProductCategoryPanel";
 import ProductItem from "../components/ProductItem";
-import { useDispatch, useSelector } from "react-redux";
+import SuccessAlert from "../components/SuccessAlert";
 import { getSellerProduct } from "../redux/action/productAction";
 
 export default function SellerProductPage() {
@@ -13,6 +12,10 @@ export default function SellerProductPage() {
   const dispatch = useDispatch();
   const { sellerProductList } = useSelector((state) => state.productReducer);
   const { dataGetProfile } = useSelector((state) => state.authReducer);
+  const [alertSuccess, setAlertSuccess] = useState(false);
+  let [searchParams] = useSearchParams();
+  let isAddSuccess = searchParams.get("isAddPublishProductSuccess");
+  let isAddProduct = searchParams.get("isAddProductSuccess");
 
   const productCategory = [
     "Semua",
@@ -24,15 +27,23 @@ export default function SellerProductPage() {
   ];
   useEffect(() => {
     dispatch(getSellerProduct());
-  }, [dispatch]);
-
-  let [searchParams] = useSearchParams();
-  let isAddSuccess = searchParams.get("isAddProductSuccess");
+    if (isAddSuccess || isAddProduct) {
+      setAlertSuccess(true);
+    }
+  }, [dispatch, isAddProduct, isAddSuccess]);
 
   return (
     <div className="min-h-screen max-w-5xl mx-auto pt-10">
-      {isAddSuccess && (
-        <SuccessAlert showAlert={true} message="Prduct Created" />
+      {alertSuccess && (
+        <SuccessAlert
+          isShow={alertSuccess}
+          setIsShow={setAlertSuccess}
+          message={
+            isAddProduct
+              ? "Product berhasil ditambahkan."
+              : "Produk berhasil diterbitkan."
+          }
+        />
       )}
 
       <h1 className="text-2xl mb-7">
