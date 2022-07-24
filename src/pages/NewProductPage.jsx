@@ -174,14 +174,17 @@ export default function NewProductPage() {
 							</div>
 						))}
 				</div>
-				<button
-					className={`h-10 mt-2 py-2 px-3 rounded-xl w-1/2 border border-primaryPurple `}>
-					Preview
-				</button>
-				<button
-					className={`h-10 py-2 px-1 text-white bg-primaryPurple rounded-xl w-1/2`}>
-					Simpan
-				</button>
+
+				<section className='flex justify-between'>
+					<button
+						className={`h-10 py-2 px-5 rounded-xl w-2/5 border border-primaryPurple `}>
+						Preview
+					</button>
+					<button
+						className={`h-10 py-2 px-3 text-white bg-primaryPurple rounded-xl w-2/5`}>
+						Simpan
+					</button>
+				</section>
 			</form>
 		</div>
 	);
